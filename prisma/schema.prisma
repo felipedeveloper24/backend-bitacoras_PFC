@@ -11,3 +11,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model region{
+   id_region Int @id @default(autoincrement())
+   nombre_region String   
+}
+
+model estado_empresa{
+    id_estado_empresa Int @id @default(autoincrement())
+    nombre_estado_empresa String
+}
+
+model estado_inscripcion{
+    id_estado_inscripcion Int @id @default(autoincrement())
+    nombre_estado_inscripcion String
+}
+model estado_bitacora{
+    id_estado_bitacora Int @id @default(autoincrement())
+    nombre_estado_bitacora String
+}
+
+model modalidad{
+    id_modalidad Int @id @default(autoincrement())
+    nombre_modalidad String
+}
+model aptitud{
+    id_aptitud Int @id @default(autoincrement())
+    nombre_aptitud String
+}
+
+model representante{
+   id_representante Int @id @default(autoincrement())
+   nombre String
+   apellido String
+   telefono String
+   correo String
+}
+model tipo_bitacora{
+    id_tipo_bitacora Int @id @default(autoincrement())
+    nombre_tipo_bitacora String
+}
+
+model tipo_usuario{
+    id_tipo_usuario Int @id @default(autoincrement())
+    nombre_tipo_usuario String
+}
+
+model periodo_academico{
+    id_periodo_academico Int @id @default(autoincrement())
+    anio Int
+    periodo Int
+}
+
+model asignatura{
+    id_asignatura Int @id @default(autoincrement())
+    nombre_asignatura String
+}
+
