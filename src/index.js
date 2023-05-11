@@ -5,7 +5,7 @@ const app = express()
 require("dotenv").config({
     path:"./.env"
 })
-
+console.log('Console log de Jorge Millar')
 app.use(express.json())
 
 app.listen(process.env.PORT,()=>{
