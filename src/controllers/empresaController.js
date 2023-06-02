@@ -38,7 +38,11 @@ const crear_empresa = async(req,res)=>{
 }
 const obtener_empresas = async(req,res)=>{
     try{
-        const empresas = await prisma.empresa.findMany();
+        const empresas = await prisma.empresa.findMany(
+            {
+                include:{comuna:true, estado_empresa:true}
+            }
+        );
         if(empresas.length==0){
             return res.status(200).json({
                 mensaje:"no existen registros"
@@ -108,9 +112,11 @@ const mostrar_empresa = async(req,res) =>{
         const {id} = req.params;
         const empresa = await prisma.empresa.findFirst({
             where:{
-                id_empresa:Number(id)
+                id_empresa:Number(id),
+                
             }
         })
+       
         if(!empresa){
             return res.status(200).json({
                 mensaje:"No se ha encontrado la empresa",   

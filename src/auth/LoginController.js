@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 const Login = async(req,res) =>{
     try{
-
         const {rut,contrasena} = req.body;
         const user = await prisma.usuario.findFirst({
             where:{
@@ -30,10 +29,30 @@ const Login = async(req,res) =>{
                 mensaje:"Credenciales inválidas"
             })
         }
+   
+        if(Number(user.tipo_usuario.id_tipo_usuario)==1){
+            const alumno = await prisma.alumno.findFirst({
+                where:{
+                    rut
+                }
+            })
+            if(!alumno){
+                return res.status(401).json({
+                    mensaje:"No existe el alumno"
+                })
+            }
+            return res.status(200).json({
+                mensaje:"Se ha logueado correctamente",
+                token:token,
+                rol: user.tipo_usuario.id_tipo_usuario,
+                alumno:alumno
+            })
+        }
+       
         return res.status(200).json({
             mensaje:"Se ha logueado correctamente",
             token:token,
-            rol: user.tipo_usuario.id_tipo_usuario
+            rol: user.tipo_usuario.id_tipo_usuario,
         })
 
     }catch(error){

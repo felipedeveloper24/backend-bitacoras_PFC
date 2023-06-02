@@ -8,7 +8,7 @@ require("dotenv").config({
 app.use(express.json())
 const cors = require("cors");
 app.use(cors({
-    origin:"http://localhost:5177"
+    origin:"http://localhost:5173"
 }))
 
 const routesEmpresa = require("./routes/routesEmpresa");
