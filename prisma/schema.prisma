@@ -57,8 +57,10 @@ model Empresa{
     razon_social String @db.VarChar(50)
     direccion String @db.VarChar(100)
     centro_practica Boolean 
+    correo String @db.VarChar(70)
+    telefono String @db.VarChar(18)
     id_comuna Int
-    comuna Comuna @relation(fields: [id_comuna],references: [id_comuna])
+    comuna Comuna @relation(fields: [id_comuna],references: [id_comuna], onDelete: Cascade,onUpdate: Cascade)
     id_estado_empresa Int
     estado_empresa Estado_empresa @relation(fields: [id_estado_empresa], references: [id_estado_empresa],onDelete: Cascade,onUpdate: Cascade)
     oferta_practica Oferta_practica[]
@@ -236,7 +238,7 @@ model Modalidad{
 
 model Inscripcion_practica{
     id_inscripcion_practica Int @id @default(autoincrement())
-    fecha_inscripcion_practica DateTime @db.Date
+    fecha_inscripcion_practica DateTime @db.Date 
     fecha_inicio DateTime @db.Date
     fecha_fin DateTime @db.Date
     nota_final Int 
@@ -255,6 +257,8 @@ model Inscripcion_practica{
     id_inscribe Int
     inscribe Inscribe @relation(fields: [id_inscribe],references: [id_inscripcion],onDelete: Cascade,onUpdate: Cascade)
     
+
+
     archivo_inscripcion Archivo_inscripcion[]
     bitacora_alumno Bitacora_alumno[]
 }
@@ -269,8 +273,8 @@ model Bitacora_alumno{
     titulo String @db.VarChar(200)
     descripcion String @db.VarChar(200)
     fecha_creacion DateTime @db.Date
-    hora_inicio DateTime
-    hora_fin DateTime
+    hora_inicio DateTime @db.Time()
+    hora_fin DateTime @db.Time()
     id_estado_bitacora Int
     estado_bitacora Estado_bitacora @relation(fields: [id_estado_bitacora],references: [id_estado_bitacora])
     id_inscripcion_practica Int 
@@ -279,7 +283,6 @@ model Bitacora_alumno{
     id_usuario Int
     usuario Usuario @relation(fields: [id_usuario],references: [id_usuario],onDelete: Cascade,onUpdate: Cascade)
 }
-
 model Archivo_bitacora_alumno{
     id_archivo Int @id @default(autoincrement())
     nombre_archivo String @db.VarChar(200)
