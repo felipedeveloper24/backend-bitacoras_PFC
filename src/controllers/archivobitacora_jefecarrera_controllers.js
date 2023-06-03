@@ -1,13 +1,12 @@
 const {PrismaClient} = require ('@prisma/client')
-const validationResult = require('express-validator')
+const {validationResult} = require('express-validator')
 
 const prisma = new PrismaClient()
 
-
 const crear_archivo = async(req, res) =>{
     try {
-        const errors = validationResult(req)
-        if(errors.isEmpty()){
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
             return res.status(400).json({message:'Se han encontrado errores',
         errors: errors.array()})
         }

@@ -57,8 +57,6 @@ model Empresa{
     direccion String @db.VarChar(100)
 
     centro_practica Boolean
-
-    centro_practica Boolean 
     correo String @db.VarChar(70)
     telefono String @db.VarChar(18)
 
