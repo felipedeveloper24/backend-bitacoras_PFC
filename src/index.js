@@ -22,6 +22,9 @@ const routerArchivoInscripcion = require("./routes/routesArchivoInscripcion");
 const routerAvisos  = require("./routes/routesAvisos");
 const routerAuth = require("./routes/routesAuth");
 const routerLogin = require("./routes/LoginRoutes");
+const routerComunas = require("./routes/comunasRoutes");
+const routerEstadoEmpresa = require("./routes/EstadoEmpresaRouter");
+const routerAlumno = require("./routes/AlumnoRoutes");
 app.use("/api/empresa",routesEmpresa);
 app.use("/api/oferta",routesOferta);
 app.use("/api/inscripcion",routerInscripcion);
@@ -31,7 +34,9 @@ app.use("/api/archivoinscripcion",routerArchivoInscripcion);
 app.use("/api/aviso",routerAvisos);
 app.use("/api/auth",routerAuth);
 app.use("/api/auth",routerLogin);
-
+app.use("/api/comuna",routerComunas);
+app.use("/api/estadoempresa",routerEstadoEmpresa);
+app.use("/api/alumno",routerAlumno);
 
 const routerAptitud = require('./routes/aptitudesRoutes');
 const routerRepresentante = require('./routes/representanteRoutes');
@@ -44,6 +49,8 @@ app.use('/api/representante', routerRepresentante);
 app.use('/api/conocimiento', routerConocimiento)
 app.use('/api/archivojefe/', routerArchivoJefe)
 app.use('/api/bitacorajefe/', routerBitacoraJefe)
+
+
 app.listen(process.env.PORT,()=>{
     console.log(`El servidor está escuchando en el puerto ${process.env.PORT}`)
 })

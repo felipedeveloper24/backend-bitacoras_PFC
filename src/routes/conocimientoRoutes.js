@@ -22,8 +22,8 @@ routerConocimiento.get('/show/:id', [
 
 routerConocimiento.delete('/delete/:id', [
     AutenticacionToken,
-    param('id_alumno').notEmpty().withMessage('El campo ID es requerido').isString().withMessage('El campo ID debe ser un string').isLength({ max: 50 }),
-    param('id_aptitud').notEmpty().withMessage('El campo ID es requerido').isString().withMessage('El campo ID debe ser un string').isLength({ max: 50 })
+    param('id').notEmpty().withMessage('El campo ID es requerido').isInt().withMessage('El campo ID debe ser un entero').isLength({ max: 50 }),
+  
 ], conocimientoControllers.eliminar_conocimiento);
 
 routerConocimiento.put('/update/:id', [
