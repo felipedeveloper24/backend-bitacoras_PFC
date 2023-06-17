@@ -59,6 +59,8 @@ routerInscripcion.put("/update/:id",
 ],
 inscripcionPracticaController.actualizar_inscripcion);
 
+routerInscripcion.post("/comprobar",[AutenticacionToken],inscripcionPracticaController.comprobar_inscripcion);
 
-
+routerInscripcion.get("/listadopractica1",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1);
+routerInscripcion.get("/listadopractica2",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2)
 module.exports=routerInscripcion;

@@ -71,8 +71,9 @@ const mostrar_oferta = async(req,res) =>{
         const {id} = req.params;
         const oferta = await prisma.oferta_practica.findFirst({
             where:{
-                id_empresa:Number(id)
-            }
+                id_oferta_practica:Number(id)
+            },
+            include:{modalidad:true,periodo_academico:true,empresa:true}
         })
         if(!oferta){
             return res.status(200).json({

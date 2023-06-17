@@ -200,7 +200,7 @@ model Representante{
 }
 model Oferta_practica{
     id_oferta_practica Int @id @default(autoincrement())
-    descripcion String @db.VarChar(230)
+    descripcion String @db.VarChar(1000)
     experiencia_laboral Boolean
     cupos Int
     id_modalidad Int
@@ -244,8 +244,8 @@ model Inscripcion_practica{
     fecha_fin DateTime @db.Date
     nota_final Int
     observaciones String @db.VarChar(240)
-    id_representante Int
-    representante Representante @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
+    id_representante Int?
+    representante Representante? @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
     id_oferta Int
     oferta_practica Oferta_practica @relation(fields: [id_oferta],references: [id_oferta_practica],onDelete: Cascade,onUpdate: Cascade)
 

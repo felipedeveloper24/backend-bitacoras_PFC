@@ -49,7 +49,11 @@ const crear_inscripcion = async(req,res)=>{
 
 const mostrar_inscripciones = async(req,res) =>{
     try{
-        const inscripciones = await prisma.inscripcion_practica.findMany()
+        const inscripciones = await prisma.inscripcion_practica.findMany({
+            include:{
+                estado_inscripcion:true
+            }
+        })
         if(inscripciones.length==0){
             return res.status(200).json({
                 mensaje:"No existen registros de inscripciones"
@@ -186,5 +190,127 @@ const actualizar_inscripcion = async(req,res)=>{
     }
 };
 
+const comprobar_inscripcion = async(req,res)=>{
 
-module.exports={crear_inscripcion,mostrar_inscripciones,mostrar_inscripcion,eliminar_inscripcion,actualizar_inscripcion}
+    try{
+        const {id_alumno} = req.body;
+        //comprobamos si el alumno existe
+        const alumno = await prisma.alumno.findFirst({
+            where:{
+                id_alumno:id_alumno
+            }
+        })
+        if(!alumno){
+            return res.status(400).json({
+                mensaje:"El alumno no existe"
+            })
+        }
+        //consultamos si tiene inscrita la practica desde intranet
+        const inscribe = await prisma.inscribe.findFirst({
+            where:{
+                id_alumno:id_alumno
+            }
+        })
+        if(!inscribe){
+            return res.status(400).json({
+                mensaje:"El alumno no tiene inscrita la práctica desde intranet"
+            })
+        }
+
+        const inscripcion_sistema = await prisma.inscripcion_practica.findFirst({
+            where:{
+                id_inscribe:inscribe.id_inscripcion
+            }
+        })
+        if(!inscripcion_sistema){
+            return res.status(400).json({
+                mensaje:"Por favor haga inscripción en el sistema"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Tiene su práctica inscrita correctamente en el sistema"
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            error: error.stack
+        });
+    }
+}
+
+
+const mostrar_listado_alumnos_practica1 = async(req,res)=>{
+    try{
+
+        //Buscamos la sección que corresponde
+        const seccion = await prisma.seccion.findFirst({
+            where:{
+                id_asignatura:620509
+            }
+        })
+        if(!seccion){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const inscribe = await prisma.inscribe.findMany({
+            where:{
+                id_seccion:Number(seccion.id_seccion)
+            },
+            include:{alumno:true,periodo_academico:true}
+        })
+        if(!inscribe){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se ha encontrado algo",
+            inscribe:inscribe
+        })
+    }catch(error){
+        console.log(error.stack)
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+const mostrar_listado_alumnos_practica2 = async(req,res)=>{
+    try{
+
+        //Buscamos la sección que corresponde
+        const seccion = await prisma.seccion.findFirst({
+            where:{
+                id_asignatura:620520
+            }
+        })
+        if(!seccion){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const inscribe = await prisma.inscribe.findMany({
+            where:{
+                id_seccion:Number(seccion.id_seccion)
+            },
+            include:{alumno:true,periodo_academico:true}
+        })
+        if(!inscribe){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se ha encontrado algo",
+            inscribe:inscribe
+        })
+    }catch(error){
+        console.log(error.stack)
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+
+
+module.exports={crear_inscripcion,mostrar_inscripciones,comprobar_inscripcion,mostrar_inscripcion,eliminar_inscripcion,actualizar_inscripcion,mostrar_listado_alumnos_practica1,mostrar_listado_alumnos_practica2}
