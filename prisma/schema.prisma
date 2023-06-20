@@ -246,8 +246,8 @@ model Inscripcion_practica{
     observaciones String @db.VarChar(240)
     id_representante Int?
     representante Representante? @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
-    id_oferta Int
-    oferta_practica Oferta_practica @relation(fields: [id_oferta],references: [id_oferta_practica],onDelete: Cascade,onUpdate: Cascade)
+    id_oferta Int?
+    oferta_practica Oferta_practica? @relation(fields: [id_oferta],references: [id_oferta_practica],onDelete: Cascade,onUpdate: Cascade)
 
     id_estado_inscripcion Int
     estado_inscripcion Estado_inscripcion @relation(fields: [id_estado_inscripcion],references: [id_estado_inscripcion],onDelete: Cascade,onUpdate: Cascade)

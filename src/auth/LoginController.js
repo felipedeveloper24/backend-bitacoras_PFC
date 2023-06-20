@@ -41,11 +41,39 @@ const Login = async(req,res) =>{
                     mensaje:"No existe el alumno"
                 })
             }
+            const inscribe = await prisma.inscribe.findFirst({
+                where:{
+                    id_alumno:Number(alumno.id_alumno)
+                },
+                include:{
+                    seccion:true
+                }
+            })
+
+            if(!inscribe){
+                return res.status(401).json({
+                    mensaje:"No tienes inscrita la práctica en intranet"
+                })
+            }
+
+            const asignatura = await prisma.asignatura.findFirst({
+                where:{
+                    id_asignatura:Number(inscribe.seccion.id_asignatura)
+                }
+            })
+            if(!asignatura){
+                return res.status(401).json({
+                    mensaje:"No existe la asignatura"
+                })
+            }
+
             return res.status(200).json({
                 mensaje:"Se ha logueado correctamente",
                 token:token,
                 rol: user.tipo_usuario.id_tipo_usuario,
-                alumno:alumno
+                alumno:alumno,
+                id_inscribe:inscribe.id_inscripcion,
+                asignatura:asignatura.nombre_asignatura
             })
         }
        

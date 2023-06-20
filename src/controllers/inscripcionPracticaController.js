@@ -82,7 +82,12 @@ const mostrar_inscripcion = async(req,res) =>{
         const {id} = req.params;
         const inscripcion = await prisma.inscripcion_practica.findFirst({
             where:{
-                id_inscripcion_practica:Number(id)
+                id_inscribe:Number(id)
+            },
+            include:{
+                estado_inscripcion:true,
+                representante:true,
+                modalidad:true
             }
         })
         if(!inscripcion){
@@ -189,7 +194,6 @@ const actualizar_inscripcion = async(req,res)=>{
         });
     }
 };
-
 const comprobar_inscripcion = async(req,res)=>{
 
     try{
@@ -197,7 +201,7 @@ const comprobar_inscripcion = async(req,res)=>{
         //comprobamos si el alumno existe
         const alumno = await prisma.alumno.findFirst({
             where:{
-                id_alumno:id_alumno
+                id_alumno:Number(id_alumno)
             }
         })
         if(!alumno){
@@ -208,12 +212,13 @@ const comprobar_inscripcion = async(req,res)=>{
         //consultamos si tiene inscrita la practica desde intranet
         const inscribe = await prisma.inscribe.findFirst({
             where:{
-                id_alumno:id_alumno
+                id_alumno:Number(id_alumno)
             }
         })
         if(!inscribe){
-            return res.status(400).json({
-                mensaje:"El alumno no tiene inscrita la práctica desde intranet"
+            return res.status(200).json({
+                mensaje:"El alumno no tiene inscrita la práctica desde intranet",
+                inscrito_intranet:false
             })
         }
 
@@ -223,15 +228,18 @@ const comprobar_inscripcion = async(req,res)=>{
             }
         })
         if(!inscripcion_sistema){
-            return res.status(400).json({
-                mensaje:"Por favor haga inscripción en el sistema"
+            return res.status(200).json({
+                mensaje:"Por favor haga inscripción en el sistema",
+                inscrito_sistema:false
             })
         }
         return res.status(200).json({
-            mensaje:"Tiene su práctica inscrita correctamente en el sistema"
+            mensaje:"Tiene su práctica inscrita correctamente en el sistema",
+            inscrito_sistema:true
         })
 
     }catch(error){
+        console.log(error.stack);
         return res.status(400).json({
             error: error.stack
         });
@@ -241,7 +249,19 @@ const comprobar_inscripcion = async(req,res)=>{
 
 const mostrar_listado_alumnos_practica1 = async(req,res)=>{
     try{
-
+        //buscamos el perido academico
+        const {anio,id_periodo} = req.body;
+        const periodo = await prisma.periodo_academico.findFirst({
+            where:{
+                anio: Number(anio),
+                periodo:Number(id_periodo)
+            }
+        })
+        if(!periodo){
+            return res.status(400).json({
+                mensaje:"No existe el periodo"
+            })
+        }
         //Buscamos la sección que corresponde
         const seccion = await prisma.seccion.findFirst({
             where:{
@@ -255,7 +275,8 @@ const mostrar_listado_alumnos_practica1 = async(req,res)=>{
         }
         const inscribe = await prisma.inscribe.findMany({
             where:{
-                id_seccion:Number(seccion.id_seccion)
+                id_seccion:Number(seccion.id_seccion),
+                id_periodo_academico:Number(periodo.id_periodo_academico)
             },
             include:{alumno:true,periodo_academico:true}
         })
@@ -277,7 +298,13 @@ const mostrar_listado_alumnos_practica1 = async(req,res)=>{
 }
 const mostrar_listado_alumnos_practica2 = async(req,res)=>{
     try{
-
+        const {anio,id_periodo} = req.body;
+        const periodo = await prisma.periodo_academico.findFirst({
+            where:{
+                anio: Number(anio),
+                periodo:Number(id_periodo)
+            }
+        })
         //Buscamos la sección que corresponde
         const seccion = await prisma.seccion.findFirst({
             where:{
@@ -291,7 +318,8 @@ const mostrar_listado_alumnos_practica2 = async(req,res)=>{
         }
         const inscribe = await prisma.inscribe.findMany({
             where:{
-                id_seccion:Number(seccion.id_seccion)
+                id_seccion:Number(seccion.id_seccion),
+                id_periodo_academico:Number(periodo.id_periodo_academico)
             },
             include:{alumno:true,periodo_academico:true}
         })

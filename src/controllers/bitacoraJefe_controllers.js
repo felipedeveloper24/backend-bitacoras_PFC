@@ -43,7 +43,12 @@ const crear_bitacoraJefe = async (req, res) => {
 
 const mostrar_bitacorasJefe = async (req, res) => {
     try {
-        const bitacojefe = await prisma.bitacora_jefe_carrera.findMany();
+        const bitacojefe = await prisma.bitacora_jefe_carrera.findMany({
+            include:{
+                estado_bitacora:true,
+                tipo_bitacora:true
+            }
+        });
         if(bitacojefe.length==0){
             return res.status(200).json({
                 mensaje: "No se han encontrado registros de bitácoras del jefe de carrera"
