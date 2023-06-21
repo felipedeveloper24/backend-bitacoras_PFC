@@ -64,4 +64,6 @@ routerInscripcion.post("/comprobar",[AutenticacionToken],inscripcionPracticaCont
 
 routerInscripcion.post("/listadopractica1",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1);
 routerInscripcion.post("/listadopractica2",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2)
+routerInscripcion.get("/modalidades",[AutenticacionToken],inscripcionPracticaController.obtener_Modalidades);
+
 module.exports=routerInscripcion;

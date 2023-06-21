@@ -184,4 +184,24 @@ const actualizar_bitacoraJefe = async(req,res) =>{
     }
 };
 
-module.exports = {crear_bitacoraJefe, mostrar_bitacoraJefe, mostrar_bitacorasJefe, eliminar_bitacoraJefe, actualizar_bitacoraJefe}
+const obtener_tipo_bitacoras = async(req,res)=>{
+    try{
+        const tipo_bitacoras = await prisma.tipo_bitacora.findMany();
+        if(tipo_bitacoras.length==0){
+            return res.status(200).json({
+                mensaje:"No hay registros"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se han encontrado datos",
+            tipo_bitacoras:tipo_bitacoras
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+
+module.exports = {crear_bitacoraJefe, mostrar_bitacoraJefe, mostrar_bitacorasJefe, eliminar_bitacoraJefe, actualizar_bitacoraJefe,obtener_tipo_bitacoras}

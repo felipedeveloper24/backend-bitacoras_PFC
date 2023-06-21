@@ -340,5 +340,32 @@ const mostrar_listado_alumnos_practica2 = async(req,res)=>{
     }
 }
 
+const obtener_Modalidades = async(req,res) =>{
+    try{
+        const modalidades = await prisma.modalidad.findMany();
+        if(modalidades.length==0){
+            return res.status(200).json({
+                mensaje:"No hay modalidades"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se han encontrado resultados",
+            modalidades:modalidades
+        })
+    }catch(error){
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
 
-module.exports={crear_inscripcion,mostrar_inscripciones,comprobar_inscripcion,mostrar_inscripcion,eliminar_inscripcion,actualizar_inscripcion,mostrar_listado_alumnos_practica1,mostrar_listado_alumnos_practica2}
+
+module.exports={crear_inscripcion,
+    mostrar_inscripciones,
+    comprobar_inscripcion,
+    mostrar_inscripcion,
+    eliminar_inscripcion,
+    actualizar_inscripcion,
+    mostrar_listado_alumnos_practica1,
+    mostrar_listado_alumnos_practica2,
+    obtener_Modalidades}

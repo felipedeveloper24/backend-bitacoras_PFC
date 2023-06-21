@@ -9,6 +9,9 @@ const obtener_alumno = async(req,res)=>{
         const alumno = await prisma.alumno.findFirst({
             where:{
                 rut: rut
+            },
+            include:{
+                carrera:true
             }
         })
         if(!alumno){

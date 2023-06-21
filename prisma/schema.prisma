@@ -131,6 +131,11 @@ model Afecta{
     id_alumno Int
     alumno Alumno @relation(fields: [id_alumno],references: [id_alumno],onDelete: Cascade,onUpdate: Cascade)
 }
+model Carrera{
+    id_carrera Int @id @default(autoincrement())
+    nombre_carrera String
+    alumno Alumno[]
+}
 model Alumno{
     id_alumno Int @id @default(autoincrement())
     rut String @db.VarChar(15)
@@ -144,6 +149,8 @@ model Alumno{
     telefono_familiar String @db.VarChar(15)
     correo_institucional String @db.VarChar(100)
     correo_personal String @db.VarChar(100)
+    id_carrera Int
+    carrera Carrera @relation(fields: [id_carrera], references: [id_carrera],onDelete: Cascade, onUpdate: Cascade)
     conocimiento Conocimiento[]
     afecta Afecta[] 
     inscribe Inscribe[]

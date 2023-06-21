@@ -21,7 +21,7 @@ routerBitacorasJefe.post("/create", [
     body('id_usuario').notEmpty().withMessage('El campo ID de usuario es requerido').isNumeric().withMessage('El campo ID de usuario debe ser numérico')
 ], JefeBitacoraControllers.crear_bitacoraJefe);
 
-
+routerBitacorasJefe.get("/tipobitacoras",[AutenticacionJefe],JefeBitacoraControllers.obtener_tipo_bitacoras);
 
 
 module.exports = routerBitacorasJefe;

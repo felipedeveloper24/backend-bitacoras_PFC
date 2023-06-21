@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 const Login = async(req,res) =>{
     try{
+        console.log(req.body)
         const {rut,contrasena} = req.body;
         const user = await prisma.usuario.findFirst({
             where:{
