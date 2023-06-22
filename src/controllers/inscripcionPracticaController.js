@@ -8,6 +8,8 @@ const prisma = new PrismaClient();
 const crear_inscripcion = async(req,res)=>{
 
     try{
+      
+        console.log(req.body)  
         const errors = validationResult(req);  
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -15,7 +17,8 @@ const crear_inscripcion = async(req,res)=>{
                     errors:errors.array()
             })
         }
-        const {fecha_inscripcion_practica,fecha_inicio,fecha_fin,id_inscribe,observaciones,id_representante,id_oferta,id_estado_inscripcion, id_modalidad} = req.body;
+        
+        const {fecha_inscripcion_practica,fecha_inicio,fecha_fin,id_inscribe,id_representante,id_oferta,id_estado_inscripcion, id_modalidad} = req.body;
         const formato_fecha = "T00:00:00Z";
 
         const inscripcion = await prisma.inscripcion_practica.create({
@@ -26,7 +29,7 @@ const crear_inscripcion = async(req,res)=>{
                 nota_final:0,
                 id_inscribe,
                 id_estado_inscripcion,
-                id_modalidad,observaciones,
+                id_modalidad,observaciones:"",
                 id_oferta,
                 id_representante
             }
@@ -36,11 +39,12 @@ const crear_inscripcion = async(req,res)=>{
                 mensaje: "Error al registrar inscripcion"
             })
         }
-        return res.status(201).json({
+        return res.status(200).json({
             mensaje:"Inscripcion registrada correctamente",
             inscripcion:inscripcion
         })
     }catch(error){
+        console.log(error.stack)
         return res.status(400).json({
             error: error.stack
         });

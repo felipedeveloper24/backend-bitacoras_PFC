@@ -12,8 +12,8 @@ const crear_bitacoraJefe = async (req, res) => {
         }
         const { titulo, descripcion, fecha_creacion, hora_inicio, hora_fin, id_tipo_bitacora, id_estado_bitacora, id_usuario } = req.body;
         const formato_fecha = "T00:00:00Z";
-        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}Z`
-        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}Z`
+        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}:00Z`
+        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}:00Z`
         const bitacorajefe = await prisma.bitacora_jefe_carrera.create({
             data:{
                 titulo,
