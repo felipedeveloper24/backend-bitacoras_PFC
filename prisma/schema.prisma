@@ -110,7 +110,7 @@ model Etiqueta{
 model Bitacora_jefe_carrera{
     id_bitacora Int @id @default(autoincrement())
     titulo String @db.VarChar(200)
-    descripcion String @db.VarChar(240)
+    descripcion String @db.VarChar(1300)
     fecha_creacion DateTime @db.Date()
     hora_inicio DateTime
     hora_fin DateTime

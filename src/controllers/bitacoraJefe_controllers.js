@@ -78,6 +78,10 @@ const mostrar_bitacoraJefe = async(req,res) =>{
         const bitacora = await prisma.bitacora_jefe_carrera.findFirst({
             where:{
                 id_bitacora:Number(id)
+            },
+            include:{
+                estado_bitacora:true,
+                tipo_bitacora:true
             }
         })
         if(!bitacora){

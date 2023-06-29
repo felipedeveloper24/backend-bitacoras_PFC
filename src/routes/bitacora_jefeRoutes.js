@@ -1,6 +1,6 @@
 const express = require('express')
 const JefeBitacoraControllers = require('../controllers/bitacoraJefe_controllers')
-const {body} = require('express-validator')
+const {body,param} = require('express-validator')
 const { AutenticacionJefe } = require('../middlewares/verifyRolJefe')
 const routerBitacorasJefe = express.Router()
 
@@ -12,7 +12,7 @@ routerBitacorasJefe.get("/show/:id",AutenticacionJefe, JefeBitacoraControllers.m
 routerBitacorasJefe.post("/create", [
     AutenticacionJefe, 
     body('titulo').notEmpty().withMessage('El campo título es requerido').isString().withMessage('El campo título debe ser un string').isLength({ max: 50 }),
-    body('descripcion').notEmpty().withMessage('El campo descripción es requerido').isString().withMessage('El campo descripción debe ser un string').isLength({ max: 100 }),
+    body('descripcion').notEmpty().withMessage('El campo descripción es requerido').isString().withMessage('El campo descripción debe ser un string').isLength({ max: 1300 }),
     body('fecha_creacion').notEmpty().withMessage('El campo fecha de creación es requerido').isDate().withMessage('El campo debe ser una fecha'),
     body('hora_inicio').notEmpty().withMessage('El campo hora de inicio es requerido').isString().withMessage('El campo hora de inicio debe ser un string').isLength({ max: 10 }),
     body('hora_fin').notEmpty().withMessage('El campo hora de fin es requerido').isString().withMessage('El campo hora de fin debe ser un string').isLength({ max: 10 }),
@@ -23,5 +23,10 @@ routerBitacorasJefe.post("/create", [
 
 routerBitacorasJefe.get("/tipobitacoras",[AutenticacionJefe],JefeBitacoraControllers.obtener_tipo_bitacoras);
 
+routerBitacorasJefe.delete("/delete/:id",
+[
+    AutenticacionJefe,
+    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+], JefeBitacoraControllers.eliminar_bitacoraJefe)
 
 module.exports = routerBitacorasJefe;

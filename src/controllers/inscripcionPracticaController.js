@@ -160,7 +160,7 @@ const actualizar_inscripcion = async(req,res)=>{
         const {id} = req.params;
         const inscripcion = await prisma.inscripcion_practica.findFirst({
             where:{
-                id_inscripcion_practica:Number(id)
+                id_inscribe:Number(id)
             }
         })
         if(!inscripcion){
@@ -193,6 +193,7 @@ const actualizar_inscripcion = async(req,res)=>{
         });
 
     }catch(error){
+        console.log(error.stack)
         return res.status(400).json({
             error: error.stack
         });
@@ -363,6 +364,100 @@ const obtener_Modalidades = async(req,res) =>{
     }
 }
 
+const actualizar_representante = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const {id_representante} = req.body;
+        const inscripcion = await prisma.inscripcion_practica.findFirst({
+            where:{
+                id_inscribe:Number(id)
+            }
+        })
+        console.log(inscripcion);
+        if(!inscripcion){
+            return res.status(400).json(
+                {
+                    mensaje:"La inscripcion no existe"
+                }
+            )
+        }
+        const actualiza = await prisma.inscripcion_practica.update({
+            where:{
+                id_inscripcion_practica:Number(inscripcion.id_inscripcion_practica)
+            },
+            data:{
+                id_representante:Number(id_representante)
+            }
+        })
+        if(!actualiza){
+            return res.status(400).json(
+                {
+                    mensaje:"Error al actualizar"
+                }
+            )
+        }
+        return res.status(200).json({
+            mensaje:"Inscripción actualizada correctamente"
+        })
+       
+    }catch(error){
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+
+
+const actualizar_inscripcion_alumno = async(req,res)=>{
+    try{
+        const errors = validationResult(req);  
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                    mensaje:"Se han encontrado errores",
+                    errors:errors.array()
+            })
+        }
+        const {id} = req.params;
+        const inscripcion = await prisma.inscripcion_practica.findFirst({
+            where:{
+                id_inscribe:Number(id)
+            }
+        })
+        if(!inscripcion){
+            return res.status(200).json({
+                mensaje:"La inscripción no existe"
+            })
+        }
+        const {fecha_inscripcion_practica,fecha_inicio,fecha_fin,id_inscribe,id_representante,id_oferta,id_estado_inscripcion, id_modalidad} = req.body;
+        const formato_fecha = "T00:00:00Z";
+        const inscripcion_actualizada = await prisma.inscripcion_practica.update({
+            where:{
+                id_inscripcion_practica: Number(inscripcion.id_inscripcion_practica)
+            },
+            data:{
+                fecha_inscripcion_practica:`${fecha_inscripcion_practica}${formato_fecha}`,
+                fecha_inicio:`${fecha_inicio}${formato_fecha}`,
+                fecha_fin:`${fecha_fin}${formato_fecha}`,
+                id_inscribe,
+                id_estado_inscripcion,
+                id_modalidad,
+                id_oferta,
+                id_representante
+            }
+        })
+
+        return res.status(200).json({
+            mensaje:"Inscripción actualizada correctamente",
+            inscripcion_actualizada:inscripcion_actualizada
+        });
+
+    }catch(error){
+        console.log(error.stack)
+        return res.status(400).json({
+            error: error.stack
+        });
+    }
+};
 
 module.exports={crear_inscripcion,
     mostrar_inscripciones,
@@ -372,4 +467,7 @@ module.exports={crear_inscripcion,
     actualizar_inscripcion,
     mostrar_listado_alumnos_practica1,
     mostrar_listado_alumnos_practica2,
-    obtener_Modalidades}
+    obtener_Modalidades,
+    actualizar_representante,
+    actualizar_inscripcion_alumno
+}

@@ -42,25 +42,30 @@ routerInscripcion.delete("/delete/:id",
 ]
 ,inscripcionPracticaController.eliminar_inscripcion);
 
-routerInscripcion.put("/update/:id",
-[
-    AutenticacionAlumno,
-    body("fecha_inscripcion_practica").notEmpty().withMessage("El campo es requerido"),
-    body("fecha_inicio").notEmpty().withMessage("El campo es requerido"),
-    body("fecha_fin").notEmpty().withMessage("El campo es requerido"),
-    body("observaciones").notEmpty().withMessage("El campo es requerido").isString().withMessage("El campo observaciones debe ser un string"),
-    body("id_representante").notEmpty().withMessage("El campo es requerido").isInt().withMessage("El campo debe ser un entero"),
-    body("id_oferta").notEmpty().withMessage("El campo es requerido").isInt().withMessage("El campo debe ser un entero"),
-    body("id_modalidad").notEmpty().withMessage("El campo es requerido").isInt().withMessage("El campo debe ser un entero"),
-    body("id_estado_inscripcion").notEmpty().withMessage("El campo es requerido").isInt().withMessage("El campo debe ser un entero"),
-    body("id_inscribe").notEmpty().withMessage("El campo es requerido").isInt().withMessage("El campo debe ser un entero")
-],
-inscripcionPracticaController.actualizar_inscripcion);
+
 
 routerInscripcion.post("/comprobar",[AutenticacionToken],inscripcionPracticaController.comprobar_inscripcion);
 
 routerInscripcion.post("/listadopractica1",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1);
 routerInscripcion.post("/listadopractica2",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2)
 routerInscripcion.get("/modalidades",[AutenticacionToken],inscripcionPracticaController.obtener_Modalidades);
+routerInscripcion.put("/actualizarepresentante/:id",[AutenticacionToken],inscripcionPracticaController.actualizar_representante);
+
+
+routerInscripcion.put("/actualizaralumno/:id",
+[
+    AutenticacionAlumno,
+    body("fecha_inscripcion_practica").optional(),
+    body("fecha_inicio").optional().isDate().withMessage("El campo debe ser una fecha"),
+    body("fecha_fin").optional().isString().withMessage("El campo debe ser una fecha"),
+    body("observaciones").optional().isString().withMessage("El campo observaciones debe ser un string"),
+    body("id_representante").optional().isInt().withMessage("El campo debe ser un entero"),
+    body("id_oferta").optional().isInt().withMessage("El campo debe ser un entero"),
+    body("id_modalidad").optional().isInt().withMessage("El campo debe ser un entero"),
+    body("id_estado_inscripcion").optional().isInt().withMessage("El campo debe ser un entero"),
+    body("id_inscribe").optional().isInt().withMessage("El campo debe ser un entero")
+]
+,
+inscripcionPracticaController.actualizar_inscripcion_alumno);
 
 module.exports=routerInscripcion;
