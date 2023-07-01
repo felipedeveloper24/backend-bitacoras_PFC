@@ -30,6 +30,7 @@ const crear_oferta = async(req,res) => {
         })
         
     }catch(error){
+        console.log(error.stack)
         return res.status(400).json({
             mensaje:"Error al crear la oferta",
             error:error.stack
@@ -40,7 +41,15 @@ const crear_oferta = async(req,res) => {
 const mostrar_ofertas = async(req,res) =>{
     try{
         
-        const ofertas = await prisma.oferta_practica.findMany();
+        const ofertas = await prisma.oferta_practica.findMany(
+            {
+                include:{
+                    periodo_academico:true,
+                    modalidad:true,
+                    empresa:true
+                }
+            }
+        );
         if(ofertas.length==0){
             return res.status(200).json({
                 mensaje:"No hay ofertas registradas"

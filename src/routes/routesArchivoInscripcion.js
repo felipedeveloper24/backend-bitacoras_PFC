@@ -17,7 +17,7 @@ routerArchivoInscripcion.post("/create",
 [
     AutenticacionAlumno,
     upload.single("archivo"),
-    body("tipo_archivo").notEmpty().withMessage("El campo tipo_archivo es requerido").isInt().withMessage("El campo tipo_archivo debe ser entero"),
+    body("tipo_archivo").notEmpty().withMessage("El campo tipo_archivo es requerido"),
     body("id_inscripcion").notEmpty().withMessage("El campo id_inscripcion es requerido").isInt().withMessage("El campo id_inscripcion debe ser entero")   
 ],
 archivoInscripcionController.subirArchivo)

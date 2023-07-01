@@ -12,13 +12,14 @@ const subirArchivo = async(req,res) =>{
                 errors:errors.array()
             })
         }
+        console.log(req.body);
         const {originalname,buffer} = req.file;
         const {tipo_archivo,id_inscripcion} = req.body;
         const archivo = await prisma.archivo_inscripcion.create({
             data:{
-                nombre_archivo:originalname,
+                nombre:originalname,
                 tipo_archivo:tipo_archivo,
-                id_inscripcion,
+                id_inscripcion:Number(id_inscripcion),
                 archivo:buffer            
             }
         })
@@ -28,12 +29,13 @@ const subirArchivo = async(req,res) =>{
                 mensaje:"Error al subir un archivo",
             })
         }
-        return res.status(201).json({
+        return res.status(200).json({
             mensaje:"Archivo subido correctamente",
             archivo:archivo
         })
 
     }catch(error){
+        console.log(error.stack)
         return res.status(400).json({
             mensaje:"Error al subir el archivo",
             error:error.stack
@@ -60,7 +62,7 @@ const mostrar_archivos = async(req,res) =>{
                 mensaje:"No hay registros de archivos"
             })
         }
-        return res.status.json({
+        return res.status(200).json({
             mensaje:"Se han encontrado archivos",
             archivos:archivos
         })

@@ -25,6 +25,7 @@ const routerLogin = require("./routes/LoginRoutes");
 const routerComunas = require("./routes/comunasRoutes");
 const routerEstadoEmpresa = require("./routes/EstadoEmpresaRouter");
 const routerAlumno = require("./routes/AlumnoRoutes");
+const routerPeriodo = require("./routes/periodosRoutes");
 app.use("/api/empresa",routesEmpresa);
 app.use("/api/oferta",routesOferta);
 app.use("/api/inscripcion",routerInscripcion);
@@ -37,7 +38,7 @@ app.use("/api/auth",routerLogin);
 app.use("/api/comuna",routerComunas);
 app.use("/api/estadoempresa",routerEstadoEmpresa);
 app.use("/api/alumno",routerAlumno);
-
+app.use("/api/periodo",routerPeriodo);
 const routerAptitud = require('./routes/aptitudesRoutes');
 const routerRepresentante = require('./routes/representanteRoutes');
 const routerConocimiento  = require('./routes/conocimientoRoutes');
