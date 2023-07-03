@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 
 const subirArchivo = async(req,res) =>{
     try{
+        console.log(req.body);
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -14,11 +15,12 @@ const subirArchivo = async(req,res) =>{
         }
         const {originalname,buffer} = req.file;
         const {tipo_archivo,id_bitacora} = req.body;
+        console.log(req.body);
         const archivo = await prisma.archivo_bitacora_alumno.create({
             data:{
                 nombre_archivo:originalname,
                 tipo_archivo:tipo_archivo,
-                id_bitacora:id_bitacora,
+                id_bitacora:Number(id_bitacora),
                 archivo:buffer            
             }
         })
@@ -28,19 +30,20 @@ const subirArchivo = async(req,res) =>{
                 mensaje:"Error al subir un archivo",
             })
         }
-        return res.status(201).json({
+        return res.status(200).json({
             mensaje:"Archivo subido correctamente",
             archivo:archivo
         })
 
     }catch(error){
+        console.log(error.stack)
         return res.status(400).json({
             mensaje:"Error al subir el archivo",
             error:error.stack
         })
     }
 };
-const mostrar_archivos = async(req,res) =>{
+const mostrar_archivos_pdf = async(req,res) =>{
     try{
         const errors = validationResult(req);
         if(!errors.isEmpty()){
@@ -52,7 +55,8 @@ const mostrar_archivos = async(req,res) =>{
         const {id_bitacora} = req.body;
         const archivos = await prisma.archivo_bitacora_alumno.findMany({
             where:{
-                id_bitacora: id_bitacora
+                id_bitacora: id_bitacora,
+                tipo_archivo:"pdf"
             }
         })
         if(archivos.length == 0){
@@ -60,7 +64,39 @@ const mostrar_archivos = async(req,res) =>{
                 mensaje:"No hay registros de archivos"
             })
         }
-        return res.status.json({
+        return res.status(200).json({
+            mensaje:"Se han encontrado archivos",
+            archivos:archivos
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error al subir el archivo",
+            error:error.stack
+        })
+    }
+}
+const mostrar_imagenes = async(req,res)=>{
+    try{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                mensaje:"Se han encontrado errores",
+                errors:errors.array()
+            })
+        }
+        const {id_bitacora} = req.body;
+        const archivos = await prisma.archivo_bitacora_alumno.findMany({
+            where:{
+                id_bitacora: id_bitacora,
+            }
+        })
+        if(archivos.length == 0){
+            return res.status(200).json({
+                mensaje:"No hay registros de archivos"
+            })
+        }
+        return res.status(200).json({
             mensaje:"Se han encontrado archivos",
             archivos:archivos
         })
@@ -108,4 +144,4 @@ const eliminar_archivo = async(req,res) =>{
         })
     }
 }
-module.exports = {subirArchivo,mostrar_archivos,eliminar_archivo}
+module.exports = {subirArchivo,mostrar_archivos_pdf,eliminar_archivo,mostrar_imagenes}
