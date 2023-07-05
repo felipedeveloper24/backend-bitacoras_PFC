@@ -82,6 +82,7 @@ const Login = async(req,res) =>{
             mensaje:"Se ha logueado correctamente",
             token:token,
             rol: user.tipo_usuario.id_tipo_usuario,
+            id_usuario: user.id_usuario,
         })
 
     }catch(error){

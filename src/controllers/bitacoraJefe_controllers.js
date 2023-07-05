@@ -21,7 +21,7 @@ const crear_bitacoraJefe = async (req, res) => {
                 fecha_creacion:`${fecha_creacion}${formato_fecha}`,
                 hora_inicio: hora_inicio_formateada,
                 hora_fin: hora_fin_formateada,
-                id_estado_bitacora, id_usuario, id_tipo_bitacora
+                id_estado_bitacora, id_usuario:Number(id_usuario), id_tipo_bitacora
             }
         })
         if(!bitacorajefe){
@@ -147,7 +147,7 @@ const actualizar_bitacoraJefe = async(req,res) =>{
         }
 
         const {id} = req.params;
-        const bitacoraJefe = await prisma.bitacora_alumno.findFirst({
+        const bitacoraJefe = await prisma.bitacora_jefe_carrera.findFirst({
             where:{
                 id_bitacora:Number(id)
             }
@@ -159,9 +159,9 @@ const actualizar_bitacoraJefe = async(req,res) =>{
         }
         const { titulo, descripcion, fecha_creacion, hora_inicio, hora_fin, id_tipo_bitacora, id_estado_bitacora, id_usuario } = req.body;
         const formato_fecha = "T00:00:00Z";
-        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}Z`
-        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}Z`
-        const bitacora_actualizada = await prisma.bitacora_alumno.update({
+        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}:00Z`
+        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}:00Z`
+        const bitacora_actualizada = await prisma.bitacora_jefe_carrera.update({
             where:{
                 id_bitacora:Number(id)
             },
@@ -176,7 +176,7 @@ const actualizar_bitacoraJefe = async(req,res) =>{
         })
 
         return res.status(200).json({
-            mensaje:"Bitacora creada exitosamente",
+            mensaje:"Bitacora actualizada exitosamente",
             bitacora:bitacora_actualizada
         })
 
@@ -208,4 +208,24 @@ const obtener_tipo_bitacoras = async(req,res)=>{
     }
 }
 
-module.exports = {crear_bitacoraJefe, mostrar_bitacoraJefe, mostrar_bitacorasJefe, eliminar_bitacoraJefe, actualizar_bitacoraJefe,obtener_tipo_bitacoras}
+const mostrar_estados = async(req,res) => {
+    try{
+        const estados_bitacora = await prisma.estado_bitacora.findMany();
+        if(estados_bitacora.length==0){
+            return res.status(200).json({
+                mensaje:"No hay registros"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se han encontrado datos",
+            estados_bitacora:estados_bitacora
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+
+module.exports = {crear_bitacoraJefe,mostrar_estados, mostrar_bitacoraJefe, mostrar_bitacorasJefe, eliminar_bitacoraJefe, actualizar_bitacoraJefe,obtener_tipo_bitacoras}

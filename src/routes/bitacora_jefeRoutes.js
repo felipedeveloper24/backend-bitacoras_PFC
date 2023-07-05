@@ -22,6 +22,7 @@ routerBitacorasJefe.post("/create", [
 ], JefeBitacoraControllers.crear_bitacoraJefe);
 
 routerBitacorasJefe.get("/tipobitacoras",[AutenticacionJefe],JefeBitacoraControllers.obtener_tipo_bitacoras);
+routerBitacorasJefe.get("/estados",[AutenticacionJefe],JefeBitacoraControllers.mostrar_estados);
 
 routerBitacorasJefe.delete("/delete/:id",
 [
