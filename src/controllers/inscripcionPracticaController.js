@@ -252,7 +252,116 @@ const comprobar_inscripcion = async(req,res)=>{
 }
 
 
-const mostrar_listado_alumnos_practica1 = async(req,res)=>{
+const mostrar_listado_alumnos_practica1_IECI = async(req,res)=>{
+    try{
+        //buscamos el perido academico
+        const {anio,id_periodo,id_asignatura} = req.body;
+        const periodo = await prisma.periodo_academico.findFirst({
+            where:{
+                anio: Number(anio),
+                periodo:Number(id_periodo)
+            }
+        })
+        if(!periodo){
+            return res.status(200).json({
+                mensaje:"No existe el periodo"
+            })
+        }
+        //Buscamos la sección que corresponde
+        const seccion = await prisma.seccion.findFirst({
+            where:{
+                id_asignatura:Number(id_asignatura)
+            }
+        })
+        if(!seccion){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const inscribe = await prisma.inscribe.findMany({
+            where:{
+                id_seccion:Number(seccion.id_seccion),
+                id_periodo_academico:Number(periodo.id_periodo_academico)
+            },
+            include:{alumno:true,periodo_academico:true}
+        })
+        if(!inscribe){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        
+        const alumnos_ieci = inscribe.filter((inscrito)=>{
+            return inscrito.alumno.id_carrera == 29037
+        })
+        return res.status(200).json({
+            mensaje:"Se ha encontrado algo",
+            alumnos_ieci:alumnos_ieci,
+            carrera: 29037,
+            cantidad_alumnos:alumnos_ieci.length
+        })
+    }catch(error){
+    
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+const mostrar_listado_alumnos_practica2_IECI = async(req,res)=>{
+    try{
+        const {anio,id_periodo} = req.body;
+        const periodo = await prisma.periodo_academico.findFirst({
+            where:{
+                anio: Number(anio),
+                periodo:Number(id_periodo)
+            }
+        })
+        if(!periodo){
+            return res.status(200).json({
+                mensaje:"No existe el periodo"
+            })
+        }
+        //Buscamos la sección que corresponde
+        const seccion = await prisma.seccion.findFirst({
+            where:{
+                id_asignatura:620520
+            }
+        })
+        if(!seccion){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const inscribe = await prisma.inscribe.findMany({
+            where:{
+                id_seccion:Number(seccion.id_seccion),
+                id_periodo_academico:Number(periodo.id_periodo_academico)
+            },
+            include:{alumno:true,periodo_academico:true}
+        })
+        if(!inscribe){
+            return res.status(200).json({
+                mensaje:"No hay alumnos inscritos",
+            })
+        }
+        const alumnos_ieci = inscribe.filter((inscrito)=>{
+            return inscrito.alumno.id_carrera == 29037
+        })
+        return res.status(200).json({
+            mensaje:"Se ha encontrado algo",
+            alumnos_ieci:alumnos_ieci,
+            cantidad_alumnos:alumnos_ieci.length,
+            carrera:29037
+        })
+    }catch(error){
+        console.log(error.stack)
+        return res.status(400).json({
+            error:error.stack
+        })
+    }
+}
+
+const mostrar_listado_alumnos_practica1_ICINF = async(req,res)=>{
     try{
         //buscamos el perido academico
         const {anio,id_periodo} = req.body;
@@ -263,7 +372,7 @@ const mostrar_listado_alumnos_practica1 = async(req,res)=>{
             }
         })
         if(!periodo){
-            return res.status(400).json({
+            return res.status(200).json({
                 mensaje:"No existe el periodo"
             })
         }
@@ -290,9 +399,14 @@ const mostrar_listado_alumnos_practica1 = async(req,res)=>{
                 mensaje:"Error al encontrar la sección"
             })
         }
+        const alumnos_icinf = inscribe.filter((inscrito)=>{
+            return inscrito.alumno.id_carrera == 29027
+        })
         return res.status(200).json({
             mensaje:"Se ha encontrado algo",
-            inscribe:inscribe
+            alumnos_icinf:alumnos_icinf,
+            cantidad_alumnos:alumnos_icinf.length,
+            carrera:29027
         })
     }catch(error){
         console.log(error.stack)
@@ -301,7 +415,7 @@ const mostrar_listado_alumnos_practica1 = async(req,res)=>{
         })
     }
 }
-const mostrar_listado_alumnos_practica2 = async(req,res)=>{
+const mostrar_listado_alumnos_practica2_ICINF = async(req,res)=>{
     try{
         const {anio,id_periodo} = req.body;
         const periodo = await prisma.periodo_academico.findFirst({
@@ -310,6 +424,11 @@ const mostrar_listado_alumnos_practica2 = async(req,res)=>{
                 periodo:Number(id_periodo)
             }
         })
+        if(!periodo){
+            return res.status(200).json({
+                mensaje:"No existe el periodo"
+            })
+        }
         //Buscamos la sección que corresponde
         const seccion = await prisma.seccion.findFirst({
             where:{
@@ -329,13 +448,18 @@ const mostrar_listado_alumnos_practica2 = async(req,res)=>{
             include:{alumno:true,periodo_academico:true}
         })
         if(!inscribe){
-            return res.status(400).json({
-                mensaje:"Error al encontrar la sección"
+            return res.status(200).json({
+                mensaje:"No hay alumnos inscritos",
             })
         }
+        const alumnos_icinf = inscribe.filter((inscrito)=>{
+            return inscrito.alumno.id_carrera == 29027
+        })
         return res.status(200).json({
             mensaje:"Se ha encontrado algo",
-            inscribe:inscribe
+            alumnos_icinf:alumnos_icinf,
+            cantidad_alumnos:alumnos_icinf.length,
+            carrera:29027
         })
     }catch(error){
         console.log(error.stack)
@@ -361,6 +485,61 @@ const obtener_Modalidades = async(req,res) =>{
         return res.status(400).json({
             error:error.stack
         })
+    }
+}
+
+const listado_alumnos_general = async(req,res)=>{
+    try{
+        const {anio,periodo_academico,asignatura,carrera} = req.body;
+        const periodo = await prisma.periodo_academico.findFirst({
+            where:{
+                anio: Number(anio),
+                periodo:Number(periodo_academico)
+            }
+        })
+        if(!periodo){
+            return res.status(200).json({
+                mensaje:"No existe el periodo"
+            })
+        }
+        //Buscamos la sección que corresponde
+        const seccion = await prisma.seccion.findFirst({
+            where:{
+                id_asignatura:Number(asignatura)
+            }
+        })
+        if(!seccion){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const inscribe = await prisma.inscribe.findMany({
+            where:{
+                id_seccion:Number(seccion.id_seccion),
+                id_periodo_academico:Number(periodo.id_periodo_academico)
+            },
+            include:{alumno:true,periodo_academico:true,seccion:true}
+        })
+        if(!inscribe){
+            return res.status(400).json({
+                mensaje:"Error al encontrar la sección"
+            })
+        }
+        const alumnos = inscribe.filter((inscrito)=>{
+            console.log(carrera)
+            return inscrito.alumno.id_carrera == Number(carrera) && inscrito.seccion.id_asignatura == Number(asignatura)
+        })
+
+        return res.status(200).json({
+            mensaje:"Se han encontrado resultados",
+            alumnos:alumnos
+        })
+
+    }catch(error){
+        console.log(error.stack)
+        return res.status(400).json({
+            error:error.stack
+        })   
     }
 }
 
@@ -465,8 +644,11 @@ module.exports={crear_inscripcion,
     mostrar_inscripcion,
     eliminar_inscripcion,
     actualizar_inscripcion,
-    mostrar_listado_alumnos_practica1,
-    mostrar_listado_alumnos_practica2,
+    mostrar_listado_alumnos_practica1_IECI,
+    mostrar_listado_alumnos_practica2_IECI,
+    mostrar_listado_alumnos_practica1_ICINF,
+    mostrar_listado_alumnos_practica2_ICINF,
+    listado_alumnos_general,
     obtener_Modalidades,
     actualizar_representante,
     actualizar_inscripcion_alumno

@@ -277,7 +277,7 @@ model Estado_bitacora{
 model Bitacora_alumno{
     id_bitacora Int @id @default(autoincrement())
     titulo String @db.VarChar(200)
-    descripcion String @db.VarChar(200)
+    descripcion String @db.VarChar(1300)
     fecha_creacion DateTime @db.Date
     hora_inicio DateTime @db.Time()
     hora_fin DateTime @db.Time()

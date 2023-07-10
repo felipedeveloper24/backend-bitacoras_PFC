@@ -11,7 +11,7 @@ routerBitacorasJefe.get("/show/:id",AutenticacionJefe, JefeBitacoraControllers.m
 
 routerBitacorasJefe.post("/create", [
     AutenticacionJefe, 
-    body('titulo').notEmpty().withMessage('El campo título es requerido').isString().withMessage('El campo título debe ser un string').isLength({ max: 50 }),
+    body('titulo').notEmpty().withMessage('El campo título es requerido').isString().withMessage('El campo título debe ser un string').isLength({ max: 200 }),
     body('descripcion').notEmpty().withMessage('El campo descripción es requerido').isString().withMessage('El campo descripción debe ser un string').isLength({ max: 1300 }),
     body('fecha_creacion').notEmpty().withMessage('El campo fecha de creación es requerido').isDate().withMessage('El campo debe ser una fecha'),
     body('hora_inicio').notEmpty().withMessage('El campo hora de inicio es requerido').isString().withMessage('El campo hora de inicio debe ser un string').isLength({ max: 10 }),

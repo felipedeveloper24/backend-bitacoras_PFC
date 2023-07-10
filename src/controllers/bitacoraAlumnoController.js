@@ -19,8 +19,8 @@ const crear_bitacora = async(req,res) =>{
        
         const {titulo,descripcion,fecha_creacion,hora_inicio,hora_fin,id_estado_bitacora,id_inscripcion_practica,id_usuario} = req.body;
         const formato_fecha = "T00:00:00Z";
-        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}Z`
-        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}Z`
+        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}:00Z`
+        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}:00Z`
         const bitacora = await prisma.bitacora_alumno.create({
             data:{
                 titulo,
@@ -46,6 +46,7 @@ const crear_bitacora = async(req,res) =>{
         
         return res.status(400).json({
             error:error.stack
+            
         })
     }
 };
@@ -159,8 +160,8 @@ const actualizar_bitacora = async(req,res) =>{
         }
         const {titulo,descripcion,fecha_creacion,hora_inicio,hora_fin,id_estado_bitacora,id_inscripcion_practica,id_usuario} = req.body;
         const formato_fecha = "T00:00:00Z";
-        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}Z`
-        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}Z`
+        const hora_inicio_formateada = `${fecha_creacion}T${hora_inicio}:00Z`
+        const hora_fin_formateada = `${fecha_creacion}T${hora_fin}:00Z`
         const bitacora_actualizada = await prisma.bitacora_alumno.update({
             where:{
                 id_bitacora:Number(id)

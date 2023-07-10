@@ -46,10 +46,14 @@ routerInscripcion.delete("/delete/:id",
 
 routerInscripcion.post("/comprobar",[AutenticacionToken],inscripcionPracticaController.comprobar_inscripcion);
 
-routerInscripcion.post("/listadopractica1",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1);
-routerInscripcion.post("/listadopractica2",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2)
+routerInscripcion.post("/listadopractica1ieci",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1_IECI);
+routerInscripcion.post("/listadopractica2ieci",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2_IECI);
+routerInscripcion.post("/listadopractica1icinf",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica1_ICINF);
+routerInscripcion.post("/listadopractica2icinf",[AutenticacionProfesional],inscripcionPracticaController.mostrar_listado_alumnos_practica2_ICINF);
+routerInscripcion.post("/listadogeneral",[AutenticacionProfesional],inscripcionPracticaController.listado_alumnos_general)
 routerInscripcion.get("/modalidades",[AutenticacionToken],inscripcionPracticaController.obtener_Modalidades);
 routerInscripcion.put("/actualizarepresentante/:id",[AutenticacionToken],inscripcionPracticaController.actualizar_representante);
+
 
 
 routerInscripcion.put("/actualizaralumno/:id",
