@@ -11,8 +11,8 @@ const { body, param } = require("express-validator");
 routerBitacoraAlumno.post("/create",
 [
     AutenticacionAlumno,
-    body("titulo").notEmpty().withMessage("El campo titulo es requerido").isString().withMessage("El campo titulo debe ser un string"),
-    body("descripcion").notEmpty().withMessage("El campo descripcion es requerido").isString().withMessage("El campo descripcion debe ser un string"),
+    body("titulo").notEmpty().withMessage("El campo titulo es requerido").isString().withMessage("El campo titulo debe ser un string").isLength({ max: 100 }),
+    body("descripcion").notEmpty().withMessage("El campo descripcion es requerido").isString().withMessage("El campo descripcion debe ser un string").isLength({ max: 1300 }),
     body("fecha_creacion").notEmpty().withMessage("El campo fecha creacion es requerido").isDate().withMessage("El campo fecha_creacion debe ser un date"),
     body("hora_inicio").notEmpty().withMessage("El campo hora inicio es requerido"),
     body("hora_fin").notEmpty().withMessage("El campo hora fin es requerido"),
