@@ -14,8 +14,8 @@ routerArchivoJefe.post("/create",
 [
     AutenticacionJefe,
     upload.single("archivo"),
-    body("tipo_archivo").notEmpty().withMessage("El campo tipo_archivo es requerido").isInt().withMessage("El campo tipo_archivo debe ser entero"),
-    body("id_bitacora").notEmpty().withMessage("El campo id_bitacora es requerido").isInt().withMessage("El campo id_bitacora debe ser entero")
+    body("tipo_archivo").notEmpty().withMessage("El campo tipo_archivo es requerido").isString().withMessage("El campo tipo_archivo debe ser string"),
+    body("id_bitacora").notEmpty().withMessage("El campo id_bitacora es requerido").isInt().withMessage("El campo id_bitacora debe ser entero")  
 ],archivoBitacoraJefeController.crear_archivo)
 
 routerArchivoJefe.get("/getall/:id",
@@ -31,6 +31,21 @@ routerArchivoJefe.delete("/delete/:id",
     param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
 ]
 ,archivoBitacoraJefeController.eliminar_archivo)
+
+routerArchivoJefe.get("/getpdf/:id",
+[
+    AutenticacionJefe,
+    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+]
+,archivoBitacoraJefeController.mostrar_archivos_pdf)
+
+routerArchivoJefe.get("/getimagenes/:id",
+[
+    AutenticacionJefe,
+    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+]
+,archivoBitacoraJefeController.mostrar_imagenes);
+
 
 
 module.exports=routerArchivoJefe;

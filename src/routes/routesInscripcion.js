@@ -56,6 +56,8 @@ routerInscripcion.put("/actualizarepresentante/:id",[AutenticacionToken],inscrip
 
 routerInscripcion.post("/updatestado",[AutenticacionToken],inscripcionPracticaController.actualizar_estado_inscripcion)
 routerInscripcion.post("/updatevaluacion",[AutenticacionToken],inscripcionPracticaController.actualizar_evaluacion_inscripcion);
+routerInscripcion.post("/getidinscripcion",[AutenticacionAlumno],inscripcionPracticaController.mostrar_id_inscripcion);
+
 
 routerInscripcion.put("/actualizaralumno/:id",
 [

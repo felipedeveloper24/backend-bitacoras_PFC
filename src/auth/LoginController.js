@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const Login = async(req,res) =>{
     try{
-        console.log(req.body)
+   
         const {rut,contrasena} = req.body;
         const user = await prisma.usuario.findFirst({
             where:{
@@ -56,7 +56,7 @@ const Login = async(req,res) =>{
                     mensaje:"No tienes inscrita la práctica en intranet"
                 })
             }
-
+            
             const asignatura = await prisma.asignatura.findFirst({
                 where:{
                     id_asignatura:Number(inscribe.seccion.id_asignatura)
@@ -67,15 +67,36 @@ const Login = async(req,res) =>{
                     mensaje:"No existe la asignatura"
                 })
             }
-
-            return res.status(200).json({
-                mensaje:"Se ha logueado correctamente",
-                token:token,
-                rol: user.tipo_usuario.id_tipo_usuario,
-                alumno:alumno,
-                id_inscribe:inscribe.id_inscripcion,
-                asignatura:asignatura.nombre_asignatura
+            const inscripcion_practica = await prisma.inscripcion_practica.findFirst({
+                where:{
+                    id_inscribe:Number(inscribe.id_inscripcion)
+                }
             })
+            console.log(inscripcion_practica);
+            if(!inscripcion_practica){
+                return res.status(200).json({
+                    mensaje:"Se ha logueado correctamente",
+                    token:token,
+                    rol: user.tipo_usuario.id_tipo_usuario,
+                    alumno:alumno,
+                    id_inscribe:inscribe.id_inscripcion,
+                    asignatura:asignatura.nombre_asignatura,
+                    id_usuario: user.id_usuario
+                })
+            }else{
+                return res.status(200).json({
+                    mensaje:"Se ha logueado correctamente",
+                    token:token,
+                    rol: user.tipo_usuario.id_tipo_usuario,
+                    alumno:alumno,
+                    id_inscribe:inscribe.id_inscripcion,
+                    asignatura:asignatura.nombre_asignatura,
+                    id_inscripcion_practica:inscripcion_practica.id_inscripcion_practica,
+                    id_usuario: user.id_usuario
+                })
+            }
+
+            
         }
        
         return res.status(200).json({
@@ -86,7 +107,7 @@ const Login = async(req,res) =>{
         })
 
     }catch(error){
-        console.log(error.message)
+     
         return res.status(400).json({
             mensaje:"Error al loguearse"
         })

@@ -17,7 +17,7 @@ const crear_archivo = async(req, res) =>{
                 nombre_archivo: originalname,
                 tipo_archivo:tipo_archivo,
                 archivo:buffer,
-                id_bitacora:id_bitacora
+                id_bitacora:Number(id_bitacora)
             }
         })
         if(!archivojefe){
@@ -25,9 +25,74 @@ const crear_archivo = async(req, res) =>{
         }
         return res.status(200).json({message:'La bitácora se ha creado con éxito'})
     } catch (error) {
-        console.log(error)
+        console.log(error.stack)
         return res.status(400).json({message:'Error, no se ha podido crear con éxito',
         error:error.stack})
+    }
+}
+const mostrar_archivos_pdf = async(req,res) =>{
+    try{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                mensaje:"Se han encontrado errores",
+                errors:errors.array()
+            })
+        }
+        const {id_bitacora} = req.body;
+        const archivos = await prisma.archivo_bitacora_jefe_carrera.findMany({
+            where:{
+                id_bitacora: id_bitacora,
+                tipo_archivo:"pdf"
+            }
+        })
+        if(archivos.length == 0){
+            return res.status(200).json({
+                mensaje:"No hay registros de archivos"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se han encontrado archivos",
+            archivos:archivos
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error al subir el archivo",
+            error:error.stack
+        })
+    }
+}
+const mostrar_imagenes = async(req,res)=>{
+    try{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                mensaje:"Se han encontrado errores",
+                errors:errors.array()
+            })
+        }
+        const {id_bitacora} = req.body;
+        const archivos = await prisma.archivo_bitacora_jefe_carrera.findMany({
+            where:{
+                id_bitacora: id_bitacora,
+            }
+        })
+        if(archivos.length == 0){
+            return res.status(200).json({
+                mensaje:"No hay registros de archivos"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se han encontrado archivos",
+            archivos:archivos
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error al subir el archivo",
+            error:error.stack
+        })
     }
 }
 
@@ -57,25 +122,6 @@ const obtener_archivos = async(req,res) =>{
     }
 }
 
-// const obtener_archivo_unaBitacora_jefecarrera = async (req, res) =>{
-//     try {
-//         const {id} = req.params
-//         const bitacora = await prisma.bitacora_jefe_carrera.findFirst({
-//             where:{
-//                 id_bitacora: Number(id)
-//             }
-//         })
-//         if(!bitacora){
-//             return res.status(200).json({message:'No existe una bitácora con este ID'})
-//         }
-//         return res.status(200).json({
-//             message:'Se ha encontrado con éxito la bitácora', bitacora:bitacora
-//         })
-//     } catch (error) {
-//         return res.status(400).json({message:'Error, no se ha encontrado',
-//     error:error.stack})
-//     }
-// }
 
 
 const eliminar_archivo = async(req, res) => {
@@ -106,35 +152,4 @@ const eliminar_archivo = async(req, res) => {
     }
 }
 
-// const actualizar_archivo_bitacoras_jefecarrera = async (req, res) => {
-//     try {
-//         const errors = validationResult(req)
-//         if(!errors.isEmpty()){
-//             return res.status(200).json({message:'Se han encontrado errores', errors:errors.array()})
-//         }
-//         const {id} = req.params
-//         const {nombre_archivo, tipo_archivo, archivo, id_bitacora} = req.body
-//         const bitacora = await prisma.archivo_bitacora_jefe_carrera.findFirst({
-//             id_bitacora:Number(id)
-//         })
-//         if(!bitacora){
-//             return res.status(200).json({message:'Error, no se ha encontrado'})
-//         }
-//         const actualizar = await prisma.archivo_bitacora_jefe_carrera.update({
-//             where:{
-//                 id_bitacora:Number(id)
-//             },
-//             data:{
-//                 nombre_archivo, tipo_archivo,archivo, id_bitacora
-//             }
-//         })
-//         if(!actualizar){
-//             return res.status(400).json({message:'Error al actualizar las bitácoras'})
-//         }
-//         return res.status(200).json({message:'Se ha actualizado la bitácora', actualizar:actualizar})
-//     } catch (error) {
-//         console.error
-//         return res.status(400).json({message:'Error al actualizar', error:error.stack})
-//     }
-// }
-module.exports = {crear_archivo, obtener_archivos, eliminar_archivo}
+module.exports = {crear_archivo, obtener_archivos, eliminar_archivo, mostrar_archivos_pdf,mostrar_imagenes}

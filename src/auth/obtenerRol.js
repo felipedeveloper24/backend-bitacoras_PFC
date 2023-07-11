@@ -21,7 +21,7 @@ const obtenerRol = async(req,res) =>{
                 mensaje:"No existe el usuario"
             })
         }
-        console.log(rol.tipo_usuario.nombre_tipo_usuario);
+      
         return res.status(200).json({
             mensaje:"Se ha encontrado el usuario",
             data:rol,

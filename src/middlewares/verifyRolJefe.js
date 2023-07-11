@@ -24,7 +24,7 @@ const AutenticacionJefe = async(req,res, next)=>{
     
         // Si el token es válido, agrega el objeto decodedToken al objeto req
         req.user = decodedToken;
-        console.log(req.user);
+    
         // Continúa con el siguiente middleware
         next();
       });

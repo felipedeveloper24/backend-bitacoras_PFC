@@ -8,14 +8,13 @@ const prisma = new PrismaClient();
 const crear_bitacora = async(req,res) =>{
     try{
         const errors = validationResult(req);
+
         if(!errors.isEmpty()){
             return res.status(400).json({
                 mensaje:"Se han encontrado errores",
                 errors:errors.array()
             })
         }
-
-        
        
         const {titulo,descripcion,fecha_creacion,hora_inicio,hora_fin,id_estado_bitacora,id_inscripcion_practica,id_usuario} = req.body;
         const formato_fecha = "T00:00:00Z";
@@ -28,7 +27,7 @@ const crear_bitacora = async(req,res) =>{
                 fecha_creacion:`${fecha_creacion}${formato_fecha}`,
                 hora_inicio:hora_inicio_formateada,
                 hora_fin:hora_fin_formateada,
-                id_estado_bitacora,id_usuario,id_inscripcion_practica
+                id_estado_bitacora,id_usuario,id_inscripcion_practica:Number(id_inscripcion_practica)
             }
         })
         
@@ -43,7 +42,7 @@ const crear_bitacora = async(req,res) =>{
         })
 
     }catch(error){
-        
+     
         return res.status(400).json({
             error:error.stack
             
@@ -53,7 +52,11 @@ const crear_bitacora = async(req,res) =>{
 
 const mostrar_bitacoras = async(req,res) =>{
     try{
-        const bitacoras = await prisma.bitacora_alumno.findMany();
+        const bitacoras = await prisma.bitacora_alumno.findMany({
+            include:{
+                estado_bitacora:true
+            }
+        });
         if(bitacoras.length==0){
             return res.status(200).json({
                 mensaje:"No hay registros de bitácoras"
@@ -83,6 +86,9 @@ const mostrar_bitacora = async(req,res) =>{
         const bitacora = await prisma.bitacora_alumno.findFirst({
             where:{
                 id_bitacora:Number(id)
+            },
+            include:{
+                estado_bitacora:true
             }
         })
         if(!bitacora){
@@ -172,17 +178,17 @@ const actualizar_bitacora = async(req,res) =>{
                 fecha_creacion:`${fecha_creacion}${formato_fecha}`,
                 hora_inicio:hora_inicio_formateada,
                 hora_fin:hora_fin_formateada,
-                id_estado_bitacora,id_usuario,id_inscripcion_practica
+                id_estado_bitacora,id_usuario,id_inscripcion_practica:Number(id_inscripcion_practica)
             }
         })
         
         return res.status(200).json({
-            mensaje:"Bitacora creada exitosamente",
+            mensaje:"Se ha actualizado exitosamente",
             bitacora:bitacora_actualizada
         })
 
     }catch(error){
-        
+        console.log(error.stack)
         return res.status(400).json({
             error:error.stack
         })

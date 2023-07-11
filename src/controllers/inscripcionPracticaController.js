@@ -715,6 +715,30 @@ const actualizar_evaluacion_inscripcion = async(req,res) =>{
     }
 }
 
+
+const mostrar_id_inscripcion = async(req,res) =>{
+    try{
+        const {id_inscribe} = req.body;
+        const inscripcion = await prisma.inscripcion_practica.findFirst({
+            where:{
+                id_inscribe:Number(id_inscribe)
+            }
+        })
+        if(!inscripcion){
+            return res.status(200).json({mensaje:"No existe la inscripcion"})
+        }
+        return res.status(200).json({
+            mensaje:"Se encontró una inscripcion",
+            id_inscripcion_practica:inscripcion.id_estado_inscripcion
+        })
+
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error al obtener id"
+        })
+    }
+}
+
 module.exports={crear_inscripcion,
     mostrar_inscripciones,
     comprobar_inscripcion,
@@ -730,5 +754,6 @@ module.exports={crear_inscripcion,
     actualizar_representante,
     actualizar_inscripcion_alumno,
     actualizar_estado_inscripcion,
-    actualizar_evaluacion_inscripcion
+    actualizar_evaluacion_inscripcion,
+    mostrar_id_inscripcion
 }
