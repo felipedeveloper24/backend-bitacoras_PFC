@@ -46,10 +46,10 @@ const obtener_comunas = async(req,res)=>{
 const obtener_comunas_por_region = async(req,res)=>{
     
     try{
-        const {id} = req.body;
+        const {id_region} = req.body;
         const comunas = await prisma.comuna.findMany({
             where:{
-                id_region: Number(id)
+                id_region: Number(id_region)
             }
         })
         if(comunas.length == 0){
@@ -89,7 +89,7 @@ const obtener_region_por_comuna = async(req, res)=>{
             region: region.region
         })
     }catch(error){
-        console.log(error);
+        
         return res.status(400).json({
             mensaje:"Error al cargar la información",
             error:error.stack

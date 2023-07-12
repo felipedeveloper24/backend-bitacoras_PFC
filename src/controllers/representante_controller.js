@@ -23,7 +23,7 @@ const crear_representante = async (req, res)=>{
         }
             return res.status(200).json({message:'El representante se ha añadido correctamente',representante:representante})
         } catch (error) {
-            console.log(error)
+           
             return res.status(400).json({message:'No se ha podido añadir el representante'})
         }
     }

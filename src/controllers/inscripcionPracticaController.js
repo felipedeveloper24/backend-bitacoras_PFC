@@ -9,7 +9,7 @@ const crear_inscripcion = async(req,res)=>{
 
     try{
       
-        console.log(req.body)  
+       
         const errors = validationResult(req);  
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -44,7 +44,7 @@ const crear_inscripcion = async(req,res)=>{
             inscripcion:inscripcion
         })
     }catch(error){
-        console.log(error.stack)
+       
         return res.status(400).json({
             error: error.stack
         });
@@ -193,7 +193,6 @@ const actualizar_inscripcion = async(req,res)=>{
         });
 
     }catch(error){
-        console.log(error.stack)
         return res.status(400).json({
             error: error.stack
         });
@@ -244,7 +243,7 @@ const comprobar_inscripcion = async(req,res)=>{
         })
 
     }catch(error){
-        console.log(error.stack);
+    
         return res.status(400).json({
             error: error.stack
         });
@@ -354,7 +353,7 @@ const mostrar_listado_alumnos_practica2_IECI = async(req,res)=>{
             carrera:29037
         })
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             error:error.stack
         })
@@ -409,7 +408,7 @@ const mostrar_listado_alumnos_practica1_ICINF = async(req,res)=>{
             carrera:29027
         })
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             error:error.stack
         })
@@ -462,7 +461,7 @@ const mostrar_listado_alumnos_practica2_ICINF = async(req,res)=>{
             carrera:29027
         })
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             error:error.stack
         })
@@ -526,7 +525,7 @@ const listado_alumnos_general = async(req,res)=>{
             })
         }
         const alumnos = inscribe.filter((inscrito)=>{
-            console.log(carrera)
+           
             return inscrito.alumno.id_carrera == Number(carrera) && inscrito.seccion.id_asignatura == Number(asignatura)
         })
 
@@ -536,7 +535,7 @@ const listado_alumnos_general = async(req,res)=>{
         })
 
     }catch(error){
-        console.log(error.stack)
+      
         return res.status(400).json({
             error:error.stack
         })   
@@ -552,7 +551,7 @@ const actualizar_representante = async(req,res) =>{
                 id_inscribe:Number(id)
             }
         })
-        console.log(inscripcion);
+      
         if(!inscripcion){
             return res.status(400).json(
                 {
@@ -647,7 +646,7 @@ const actualizar_estado_inscripcion = async(req,res) =>{
                 id_inscripcion_practica:Number(id_inscripcion)
             }
         })
-        console.log(inscripcion)
+      
         if(!inscripcion){
             return res.status(200).json({
                 mensaje:"La inscripcion no existe"
@@ -661,7 +660,7 @@ const actualizar_estado_inscripcion = async(req,res) =>{
                 id_estado_inscripcion:Number(id_estado_inscripcion)
             }
         })
-        console.log(inscripcion_actualizada);
+       
 
         return res.status(200).json({
             mensaje:"Inscripcion actualizada correctamente",
@@ -669,7 +668,7 @@ const actualizar_estado_inscripcion = async(req,res) =>{
         })
         
     }catch(error){
-        console.log(error.stack)
+      
         return res.status(400).json({
             error: error.stack
         });
@@ -700,7 +699,7 @@ const actualizar_evaluacion_inscripcion = async(req,res) =>{
                 observaciones:observaciones
             }
         })
-        console.log(inscripcion_actualizada);
+      
 
         return res.status(200).json({
             mensaje:"Inscripcion actualizada correctamente",
@@ -708,7 +707,7 @@ const actualizar_evaluacion_inscripcion = async(req,res) =>{
         })
         
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             error: error.stack
         });

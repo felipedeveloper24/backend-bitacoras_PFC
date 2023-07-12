@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const subirArchivo = async(req,res) =>{
     try{
-        console.log(req.body);
+        
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -15,7 +15,7 @@ const subirArchivo = async(req,res) =>{
         }
         const {originalname,buffer} = req.file;
         const {tipo_archivo,id_bitacora} = req.body;
-        console.log(req.body);
+        
         const archivo = await prisma.archivo_bitacora_alumno.create({
             data:{
                 nombre_archivo:originalname,
@@ -36,7 +36,7 @@ const subirArchivo = async(req,res) =>{
         })
 
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             mensaje:"Error al subir el archivo",
             error:error.stack

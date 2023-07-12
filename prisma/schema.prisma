@@ -11,11 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Region{
-   id_region Int @id @default(autoincrement())
-   nombre_region String @db.VarChar(100)
-   comunas Comuna[]  
-}
+
 
 model Asignatura{
     id_asignatura Int @id @default(autoincrement())
@@ -30,18 +26,10 @@ model Tipo_usuario{
     usuarios Usuario[]
 }
 
-model Aviso{
-    id_aviso Int @id @default(autoincrement())
-    mensaje String @db.VarChar(200)
-    fecha_creacion DateTime @db.Date()
-    id_usuario Int
-    usuarios Usuario @relation(fields: [id_usuario], references: [id_usuario],onDelete: Cascade,onUpdate: Cascade)
-}
+
 model Comuna{
     id_comuna Int @id @default(autoincrement())
     nombre String @db.VarChar(50)
-    id_region Int
-    region Region @relation(fields: [id_region],references: [id_region],onDelete: Cascade, onUpdate: Cascade)
     empresa Empresa[]
 }
 model Estado_empresa{
@@ -55,7 +43,6 @@ model Empresa{
     rut_empresa String @db.VarChar(15)
     razon_social String @db.VarChar(50)
     direccion String @db.VarChar(100)
-
     centro_practica Boolean
     correo String @db.VarChar(70)
     telefono String @db.VarChar(18)
@@ -74,14 +61,12 @@ model Conocimiento{
     aptitud Aptitud @relation(fields: [id_aptitud],references: [id_aptitud],onDelete: Cascade,onUpdate: Cascade)
 }
 
-
 model Usuario{
     id_usuario Int @id @default(autoincrement())
     rut String @db.VarChar(15)
     contrasena String @db.VarChar(15)
     id_tipo_usuario Int
     tipo_usuario Tipo_usuario @relation(fields: [id_tipo_usuario],references: [id_tipo_usuario],onDelete: Cascade,onUpdate: Cascade)
-    avisos Aviso[]
     bitacora_jefe_carrea Bitacora_jefe_carrera[]
     bitacora_alumno Bitacora_alumno[]
 }
@@ -101,12 +86,7 @@ model Archivo_bitacora_jefe_carrera{
     bitacora_jefe_carrera Bitacora_jefe_carrera @relation(fields: [id_bitacora],references: [id_bitacora],onDelete: Cascade,onUpdate: Cascade)
 }
 
-model Etiqueta{
-    id_etiqueta Int @id @default(autoincrement())
-    nombre_etiqueta String @db.VarChar(200)
-    id_bitacora Int
-    bitacora_jefe_carrera Bitacora_jefe_carrera @relation(fields: [id_bitacora],references: [id_bitacora],onDelete: Cascade,onUpdate: Cascade)
-}
+
 model Bitacora_jefe_carrera{
     id_bitacora Int @id @default(autoincrement())
     titulo String @db.VarChar(200)
@@ -121,7 +101,6 @@ model Bitacora_jefe_carrera{
     id_usuario Int
     usuario Usuario @relation(fields: [id_usuario],references: [id_usuario],onDelete: Cascade,onUpdate: Cascade)
     archivo_bitacora_jefe_carrera Archivo_bitacora_jefe_carrera[]
-    etiqueta Etiqueta[]
     afecta Afecta[]
 }
 model Afecta{
@@ -159,15 +138,8 @@ model Aptitud{
     id_aptitud Int @id @default(autoincrement())
     nombre_aptitud String @db.VarChar(50)
     conocimiento Conocimiento[]
-    requisito Requisito[]
 }
-model Requisito{
-    id_requisito Int @id @default(autoincrement())
-    id_aptitud Int
-    aptitud Aptitud @relation(fields: [id_aptitud],references: [id_aptitud],onDelete: Cascade,onUpdate: Cascade)
-    id_oferta_practica Int
-    oferta_practica Oferta_practica @relation(fields: [id_oferta_practica],references: [id_oferta_practica],onDelete: Cascade,onUpdate: Cascade)
-}
+
 
 model Periodo_academico{
     id_periodo_academico Int @id @default(autoincrement())
@@ -207,7 +179,7 @@ model Representante{
 }
 model Oferta_practica{
     id_oferta_practica Int @id @default(autoincrement())
-    descripcion String @db.VarChar(1000)
+    descripcion String @db.VarChar(15000)
     experiencia_laboral Boolean
     cupos Int
     id_modalidad Int
@@ -216,7 +188,6 @@ model Oferta_practica{
     periodo_academico Periodo_academico @relation(fields: [id_periodo_academico],references: [id_periodo_academico],onDelete: Cascade,onUpdate: Cascade)
     id_empresa Int
     empresa Empresa @relation(fields: [id_empresa],references: [id_empresa],onDelete: Cascade,onUpdate: Cascade)
-    requisito Requisito[]
     inscripcion_practica Inscripcion_practica[]
 }
 model Estado_inscripcion{

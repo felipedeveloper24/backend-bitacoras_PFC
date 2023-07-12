@@ -51,8 +51,12 @@ const crear_bitacora = async(req,res) =>{
 };
 
 const mostrar_bitacoras = async(req,res) =>{
+    const {id} = req.params;
     try{
         const bitacoras = await prisma.bitacora_alumno.findMany({
+            where:{
+                id_inscripcion_practica:Number(id)
+            },
             include:{
                 estado_bitacora:true
             }
@@ -67,6 +71,7 @@ const mostrar_bitacoras = async(req,res) =>{
             bitacoras:bitacoras
         })
     }catch(error){
+        
         return res.status(400).json({
             error:error.stack
         })
@@ -188,7 +193,7 @@ const actualizar_bitacora = async(req,res) =>{
         })
 
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             error:error.stack
         })

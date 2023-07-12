@@ -22,27 +22,4 @@ const obtener_aptitudes = async(req, res)=>{
 }
 
 module.exports = {obtener_aptitudes}
-// const crear_aptitud = async (req, res)=>{
-// try {
-//     const errors = validationResult(req)
-//     if(!errors.isEmpty()){
-//         return res.status(400).json(
-//             {message: 'Se han encontrado errores', errors: errors.array()})
-//     }
-//     const {nombre_aptitud} = req.body
-//     const aptitud = await prisma.aptitud.get({
-//         data:{
-//             nombre_aptitud: nombre_aptitud
-//         }
-//     })
-//     if(!aptitud){
-//         return res.status(400).json({message:'No se ha podido añadir tu aptitud'})
-//     }
-//         return res.status(200).json({message:'Tu aptitud se ha añadido correctamente'})
-//     } catch (error) {
-//         console.log(error)
-//         return res.status(400).json({message:'No se ha podido añadir tu aptitud'})
-//     }
-// }
 
-// module.exports = {crear_aptitud}

@@ -22,7 +22,7 @@ routerBitacoraAlumno.post("/create",
 ],
 bitacoraAlumnoController.crear_bitacora);
 
-routerBitacoraAlumno.get("/getall",[AutenticacionToken],bitacoraAlumnoController.mostrar_bitacoras)
+routerBitacoraAlumno.get("/getall/:id",[AutenticacionToken],bitacoraAlumnoController.mostrar_bitacoras)
 
 routerBitacoraAlumno.get("/show/:id",
 [

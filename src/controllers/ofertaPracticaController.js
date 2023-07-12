@@ -30,7 +30,7 @@ const crear_oferta = async(req,res) => {
         })
         
     }catch(error){
-        console.log(error.stack)
+      
         return res.status(400).json({
             mensaje:"Error al crear la oferta",
             error:error.stack

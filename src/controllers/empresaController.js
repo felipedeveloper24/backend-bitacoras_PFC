@@ -63,7 +63,7 @@ const obtener_empresas = async(req,res)=>{
 const eliminar_empresa = async (req,res) =>{
     try{
         const errors = validationResult(req);
-        console.log(req.body);
+  
         if(!errors.isEmpty()){
             return res.status(400).json({
                 mensaje:"Se han encontrado errores",
@@ -71,7 +71,7 @@ const eliminar_empresa = async (req,res) =>{
             })
         }
         const {id} = req.params;
-        console.log(id);
+       
         const empresa = await prisma.empresa.findFirst({
             where:{
                 id_empresa:Number(id)

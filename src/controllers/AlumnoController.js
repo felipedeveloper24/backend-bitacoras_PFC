@@ -24,7 +24,7 @@ const obtener_alumno = async(req,res)=>{
             alumno:alumno
         })
     }catch(error){
-        console.log(error);
+       
         return res.status(400).json({
             mensaje:"error al obtener el alumno"
         })
@@ -50,7 +50,7 @@ const obtener_apitudes_alumno =  async(req,res)=>{
             aptitudes:aptitudes
         })
     }catch(error){
-        console.log(error);
+        
         return res.status(400).json({
             mensaje:"error al encontrar aptitudes"
         })

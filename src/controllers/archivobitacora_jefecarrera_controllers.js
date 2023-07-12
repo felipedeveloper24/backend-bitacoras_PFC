@@ -25,7 +25,7 @@ const crear_archivo = async(req, res) =>{
         }
         return res.status(200).json({message:'La bitácora se ha creado con éxito'})
     } catch (error) {
-        console.log(error.stack)
+       
         return res.status(400).json({message:'Error, no se ha podido crear con éxito',
         error:error.stack})
     }

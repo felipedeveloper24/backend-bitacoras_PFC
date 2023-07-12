@@ -25,7 +25,6 @@ const crear_conocimiento = async (req, res)=>{
         }
         return res.status(200).json({message:'Se ha creado correctamente'})
     } catch (error) {
-        console.log(error)
         return res.status(400).json({message:'Error, no se ha podido crear',
         error:error.stack})
 

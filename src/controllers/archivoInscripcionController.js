@@ -12,7 +12,7 @@ const subirArchivo = async(req,res) =>{
                 errors:errors.array()
             })
         }
-        console.log(req.body);
+        
         const {originalname,buffer} = req.file;
         const {tipo_archivo,id_inscripcion} = req.body;
         const archivo = await prisma.archivo_inscripcion.create({
@@ -35,7 +35,7 @@ const subirArchivo = async(req,res) =>{
         })
 
     }catch(error){
-        console.log(error.stack)
+        
         return res.status(400).json({
             mensaje:"Error al subir el archivo",
             error:error.stack
