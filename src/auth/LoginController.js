@@ -72,7 +72,7 @@ const Login = async(req,res) =>{
                     id_inscribe:Number(inscribe.id_inscripcion)
                 }
             })
-            console.log(inscripcion_practica);
+         
             if(!inscripcion_practica){
                 return res.status(200).json({
                     mensaje:"Se ha logueado correctamente",

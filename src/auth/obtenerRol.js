@@ -29,7 +29,7 @@ const obtenerRol = async(req,res) =>{
         })
 
     }catch(error){
-        console.log(error.message);
+        
         return res.status(400).json({
             mensaje:"Error al obtener rol"
         })

@@ -221,7 +221,7 @@ model Inscripcion_practica{
     fecha_inicio DateTime @db.Date
     fecha_fin DateTime @db.Date
     nota_final Int
-    observaciones String @db.VarChar(240)
+    observaciones String @db.VarChar(1300)
     id_representante Int?
     representante Representante? @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
     id_oferta Int?
