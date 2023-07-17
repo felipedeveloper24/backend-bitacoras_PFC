@@ -52,7 +52,7 @@ app.use('/api/archivojefe/', routerArchivoJefe)
 app.use('/api/bitacorajefe/', routerBitacoraJefe)
 
 
-app.listen(process.env.PORT || 3000,()=>{
-    console.log(`El servidor está escuchando en el puerto ${process.env.PORT}`)
+app.listen(3000,()=>{
+    console.log(`El servidor está escuchando en el puerto ${3000}`)
 })
 
