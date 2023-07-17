@@ -107,7 +107,7 @@ const Login = async(req,res) =>{
         })
 
     }catch(error){
-        
+        console.log(console.log(error.stack))
         return res.status(400).json({
             mensaje:"Error al loguearse"
         })
