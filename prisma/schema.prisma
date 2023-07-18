@@ -101,15 +101,9 @@ model Bitacora_jefe_carrera{
     id_usuario Int
     usuario Usuario @relation(fields: [id_usuario],references: [id_usuario],onDelete: Cascade,onUpdate: Cascade)
     archivo_bitacora_jefe_carrera Archivo_bitacora_jefe_carrera[]
-    afecta Afecta[]
+  
 }
-model Afecta{
-    id Int @id @default(autoincrement())
-    id_bitacora Int
-    bitacora_jefe_carrera Bitacora_jefe_carrera @relation(fields: [id_bitacora],references: [id_bitacora],onDelete: Cascade,onUpdate: Cascade)
-    id_alumno Int
-    alumno Alumno @relation(fields: [id_alumno],references: [id_alumno],onDelete: Cascade,onUpdate: Cascade)
-}
+
 model Carrera{
     id_carrera Int @id @default(autoincrement())
     nombre_carrera String
@@ -131,7 +125,6 @@ model Alumno{
     id_carrera Int
     carrera Carrera @relation(fields: [id_carrera], references: [id_carrera],onDelete: Cascade, onUpdate: Cascade)
     conocimiento Conocimiento[]
-    afecta Afecta[] 
     inscribe Inscribe[]
 }
 model Aptitud{
