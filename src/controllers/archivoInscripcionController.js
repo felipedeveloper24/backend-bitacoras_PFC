@@ -35,7 +35,7 @@ const subirArchivo = async(req,res) =>{
         })
 
     }catch(error){
-        
+        console.log(error.stack)
         return res.status(400).json({
             mensaje:"Error al subir el archivo",
             error:error.stack
@@ -62,9 +62,10 @@ const mostrar_archivos = async(req,res) =>{
                 mensaje:"No hay registros de archivos"
             })
         }
+        let archivos_reverse = archivos.reverse();
         return res.status(200).json({
             mensaje:"Se han encontrado archivos",
-            archivos:archivos
+            archivos:archivos_reverse
         })
 
     }catch(error){

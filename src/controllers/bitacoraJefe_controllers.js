@@ -54,8 +54,9 @@ const mostrar_bitacorasJefe = async (req, res) => {
                 mensaje: "No se han encontrado registros de bitácoras del jefe de carrera"
             });
         }
+        let bitacora_reverse = bitacojefe.reverse()
         return res.status(200).json({
-            message:'Se han encontrado los registros de bitácoras del jefe de carrera', bitacojefe:bitacojefe
+            message:'Se han encontrado los registros de bitácoras del jefe de carrera', bitacojefe:bitacora_reverse
         })
     } catch (error) {
         return res.status(400).json({

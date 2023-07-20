@@ -48,9 +48,10 @@ const obtener_empresas = async(req,res)=>{
                 mensaje:"no existen registros"
             })
         }
+        let empresas_reverse = empresas.reverse()
         return res.status(200).json({
             mensaje:"Se han encontrado resultados",
-            empresas:empresas
+            empresas:empresas_reverse
         })
 
     }catch(error){

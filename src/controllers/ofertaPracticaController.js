@@ -55,9 +55,10 @@ const mostrar_ofertas = async(req,res) =>{
                 mensaje:"No hay ofertas registradas"
             })
         }
+        let ofertas_reverse  = ofertas.reverse();
         return res.status(200).json({
             mensaje:"Se han encontrado resultados",
-            ofertas:ofertas
+            ofertas:ofertas_reverse
         })
     }catch(error){
         return res.status(400).json({
@@ -89,7 +90,7 @@ const mostrar_oferta = async(req,res) =>{
                 mensaje: "no existe esa oferta"
             })
         }
-
+        
         return res.status(200).json({
             mensaje:"Se han encontrado registros",
             oferta:oferta

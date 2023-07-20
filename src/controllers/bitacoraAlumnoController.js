@@ -66,9 +66,10 @@ const mostrar_bitacoras = async(req,res) =>{
                 mensaje:"No hay registros de bitácoras"
             });
         }
+        let bitacoras_reverse = bitacoras.reverse();
         return res.status(200).json({
             mensaje:"Se han encontrado registros",
-            bitacoras:bitacoras
+            bitacoras:bitacoras_reverse
         })
     }catch(error){
         

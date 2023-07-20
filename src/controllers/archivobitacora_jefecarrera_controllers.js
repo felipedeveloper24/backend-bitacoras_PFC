@@ -51,9 +51,10 @@ const mostrar_archivos_pdf = async(req,res) =>{
                 mensaje:"No hay registros de archivos"
             })
         }
+        const archivos_reverse = archivos.reverse();
         return res.status(200).json({
             mensaje:"Se han encontrado archivos",
-            archivos:archivos
+            archivos:archivos_reverse
         })
 
     }catch(error){
@@ -83,9 +84,10 @@ const mostrar_imagenes = async(req,res)=>{
                 mensaje:"No hay registros de archivos"
             })
         }
+        let archivos_reverse = archivos.reverse();
         return res.status(200).json({
             mensaje:"Se han encontrado archivos",
-            archivos:archivos
+            archivos:archivos_reverse
         })
 
     }catch(error){
