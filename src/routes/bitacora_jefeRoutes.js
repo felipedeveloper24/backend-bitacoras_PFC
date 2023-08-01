@@ -5,7 +5,7 @@ const { AutenticacionJefe } = require('../middlewares/verifyRolJefe')
 const routerBitacorasJefe = express.Router()
 
 
-routerBitacorasJefe.get("/getAll",AutenticacionJefe, JefeBitacoraControllers.mostrar_bitacorasJefe)
+routerBitacorasJefe.post("/getAll",AutenticacionJefe, JefeBitacoraControllers.mostrar_bitacorasJefe)
 routerBitacorasJefe.get("/show/:id",AutenticacionJefe, JefeBitacoraControllers.mostrar_bitacoraJefe);
 
 
@@ -32,7 +32,6 @@ routerBitacorasJefe.delete("/delete/:id",
 
 routerBitacorasJefe.put("/update/:id",
 [
-    AutenticacionJefe,
     AutenticacionJefe, 
     body('titulo').notEmpty().withMessage('El campo título es requerido').isString().withMessage('El campo título debe ser un string').isLength({ max: 50 }),
     body('descripcion').notEmpty().withMessage('El campo descripción es requerido').isString().withMessage('El campo descripción debe ser un string').isLength({ max: 1300 }),

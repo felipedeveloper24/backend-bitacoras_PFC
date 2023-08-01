@@ -43,7 +43,12 @@ const crear_bitacoraJefe = async (req, res) => {
 
 const mostrar_bitacorasJefe = async (req, res) => {
     try {
+        const {id_usuario} = req.body;
+        console.log(id_usuario);
         const bitacojefe = await prisma.bitacora_jefe_carrera.findMany({
+            where:{
+                id_usuario:Number(id_usuario)
+            },
             include:{
                 estado_bitacora:true,
                 tipo_bitacora:true
@@ -59,6 +64,7 @@ const mostrar_bitacorasJefe = async (req, res) => {
             message:'Se han encontrado los registros de bitácoras del jefe de carrera', bitacojefe:bitacora_reverse
         })
     } catch (error) {
+        console.log(error.stack)
         return res.status(400).json({
             error:error.stack
         })

@@ -10,8 +10,14 @@ require("dotenv").config({
 app.use(express.json())
 const cors = require("cors");
 app.use(cors({
-    origin: "http://146.83.194.142:1207"
+    origin:"http://localhost:5173"
+    //origin: "http://146.83.194.142:1207"
 }))
+const listEndpoints = require('express-list-endpoints');
+app.use('/endpoints', (req, res) => {
+    const endpoints = listEndpoints(app);
+    res.json(endpoints);
+  });
 
 const routesEmpresa = require("./routes/routesEmpresa");
 const routesOferta = require("./routes/routesOferta");
