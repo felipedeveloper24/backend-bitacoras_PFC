@@ -22,10 +22,9 @@ routerArchivoInscripcion.post("/create",
 ],
 archivoInscripcionController.subirArchivo)
 
-routerArchivoInscripcion.get("/getall/:id",
+routerArchivoInscripcion.post("/getall",
 [
-    AutenticacionToken,
-    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+    AutenticacionToken
 ]
 ,archivoInscripcionController.mostrar_archivos)
 

@@ -22,17 +22,15 @@ routerArchivoAlumno.post("/create",
     body("id_bitacora").notEmpty().withMessage("El campo id_bitacora es requerido").isInt().withMessage("El campo id_bitacora debe ser entero")   
 ],archivoBitacoraAlumnoController.subirArchivo)
 
-routerArchivoAlumno.get("/getpdf/:id",
+routerArchivoAlumno.post("/getpdf",
 [
-    AutenticacionToken,
-    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+    AutenticacionToken
 ]
 ,archivoBitacoraAlumnoController.mostrar_archivos_pdf)
 
-routerArchivoAlumno.get("/getimagenes/:id",
+routerArchivoAlumno.post("/getimagenes",
 [
-    AutenticacionToken,
-    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+    AutenticacionToken
 ]
 ,archivoBitacoraAlumnoController.mostrar_imagenes);
 

@@ -55,7 +55,7 @@ const mostrar_archivos_pdf = async(req,res) =>{
         const {id_bitacora} = req.body;
         const archivos = await prisma.archivo_bitacora_alumno.findMany({
             where:{
-                id_bitacora: id_bitacora,
+                id_bitacora: Number(id_bitacora),
                 tipo_archivo:"pdf"
             }
         })
@@ -89,7 +89,7 @@ const mostrar_imagenes = async(req,res)=>{
         const {id_bitacora} = req.body;
         const archivos = await prisma.archivo_bitacora_alumno.findMany({
             where:{
-                id_bitacora: id_bitacora,
+                id_bitacora: Number(id_bitacora),
             }
         })
         if(archivos.length == 0){

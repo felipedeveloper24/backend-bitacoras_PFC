@@ -54,7 +54,7 @@ const mostrar_archivos = async(req,res) =>{
         const {id_inscripcion} = req.body;
         const archivos = await prisma.archivo_inscripcion.findMany({
             where:{
-                id_inscripcion: id_inscripcion
+                id_inscripcion: Number(id_inscripcion)
             }
         })
         if(archivos.length == 0){

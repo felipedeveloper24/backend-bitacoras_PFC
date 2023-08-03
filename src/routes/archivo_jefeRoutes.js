@@ -32,17 +32,15 @@ routerArchivoJefe.delete("/delete/:id",
 ]
 ,archivoBitacoraJefeController.eliminar_archivo)
 
-routerArchivoJefe.get("/getpdf/:id",
+routerArchivoJefe.post("/getpdf",
 [
-    AutenticacionJefe,
-    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+    AutenticacionJefe
 ]
 ,archivoBitacoraJefeController.mostrar_archivos_pdf)
 
-routerArchivoJefe.get("/getimagenes/:id",
+routerArchivoJefe.post("/getimagenes",
 [
-    AutenticacionJefe,
-    param("id").notEmpty().withMessage("El campo id es requerido").isInt().withMessage("El campo id debe ser entero")
+    AutenticacionJefe
 ]
 ,archivoBitacoraJefeController.mostrar_imagenes);
 
