@@ -25,7 +25,11 @@ const obtener_regiones = async(req,res)=>{
 }
 const obtener_comunas = async(req,res)=>{
     try{
-        const comuna = await prisma.comuna.findMany();
+        const comuna = await prisma.comuna.findMany({
+            orderBy:{
+                nombre:"asc"
+            }
+        });
 
         if(comuna.length ==0){
             return res.status(200).json({
