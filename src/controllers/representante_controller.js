@@ -12,10 +12,10 @@ const crear_representante = async (req, res)=>{
             return res.status(400).json(
                 {message: 'Se han encontrado errores', errors: errors.array()})
         }
-        const {nombre, apellido, telefono, correo} = req.body
+        const {nombre, apellido, telefono, correo,cargo} = req.body
         const representante = await prisma.representante.create({
             data:{
-                nombre: nombre, apellido:apellido, telefono:telefono, correo:correo
+                nombre: nombre, apellido:apellido, telefono:telefono, correo:correo,cargo:cargo
             }
         })
         if(!representante){
@@ -110,12 +110,14 @@ const crear_representante = async (req, res)=>{
                 })
             }
             const {id} = req.params
-            const { nombre, apellido, correo, telefono } = req.body;
+            console.log(id)
+            const { nombre, apellido, correo, telefono, cargo} = req.body;
             const representante = await prisma.representante.findFirst({
                 where:{
                     id_representante: Number(id)
                 }
             })
+            console.log(representante);
             if(!representante){
                 return res.status(200).json({
                     message:'No existe el representante'
@@ -127,9 +129,11 @@ const crear_representante = async (req, res)=>{
                     nombre: nombre,
                     apellido:apellido,
                     telefono: telefono,
-                    correo: correo
+                    correo: correo,
+                    cargo:cargo
                 }
             })
+          
             if(!representanteActualizado){
                 return res.status(200).json({message:'Error al actualizar al representante'})
             }
