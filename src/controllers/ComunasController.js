@@ -29,6 +29,7 @@ const obtener_comunas = async(req,res)=>{
             orderBy:{
                 nombre:"asc"
             }
+            
         });
 
         if(comuna.length ==0){

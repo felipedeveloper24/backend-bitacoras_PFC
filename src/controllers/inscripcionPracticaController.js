@@ -26,7 +26,8 @@ const crear_inscripcion = async(req,res)=>{
                 fecha_inscripcion_practica:`${fecha_inscripcion_practica}${formato_fecha}`,
                 fecha_inicio:`${fecha_inicio}${formato_fecha}`,
                 fecha_fin:`${fecha_fin}${formato_fecha}`,
-                nota_final:0,
+                nota_empresa:0,
+                nota_encargado:0,
                 id_inscribe,
                 id_estado_inscripcion,
                 id_modalidad,observaciones:"",
@@ -677,7 +678,7 @@ const actualizar_estado_inscripcion = async(req,res) =>{
 
 const actualizar_evaluacion_inscripcion = async(req,res) =>{
     try{
-        const {id_inscripcion,nota_final, observaciones} = req.body;
+        const {id_inscripcion,nota_empresa,nota_encargado, observaciones} = req.body;
 
         const inscripcion = await prisma.inscripcion_practica.findFirst({
             where:{
@@ -695,7 +696,8 @@ const actualizar_evaluacion_inscripcion = async(req,res) =>{
                 id_inscripcion_practica: Number(id_inscripcion)
             },
             data:{
-                nota_final: Number(nota_final),
+                nota_empresa: Number(nota_empresa),
+                nota_encargado:Number(nota_encargado),
                 observaciones:observaciones
             }
         })

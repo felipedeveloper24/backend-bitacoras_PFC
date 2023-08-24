@@ -14,13 +14,14 @@ const subirArchivo = async(req,res) =>{
         }
         
         const {originalname,buffer} = req.file;
-        const {tipo_archivo,id_inscripcion} = req.body;
+        const {tipo_archivo,id_inscripcion,tipo_documento} = req.body;
         const archivo = await prisma.archivo_inscripcion.create({
             data:{
                 nombre:originalname,
                 tipo_archivo:tipo_archivo,
                 id_inscripcion:Number(id_inscripcion),
-                archivo:buffer            
+                archivo:buffer,
+                tipo_documento:tipo_documento
             }
         })
         

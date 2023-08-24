@@ -114,8 +114,7 @@ const mostrar_empresa = async(req,res) =>{
         const empresa = await prisma.empresa.findFirst({
             where:{
                 id_empresa:Number(id),
-                
-            }
+            },include:{comuna:true}
         })
        
         if(!empresa){

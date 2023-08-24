@@ -194,6 +194,7 @@ model Estado_inscripcion{
 model Archivo_inscripcion{
     id_archivo Int @id @default(autoincrement())
     nombre String @db.VarChar(200)
+    tipo_documento String @db.VarChar(50)
     tipo_archivo String @db.VarChar(100)
     archivo Bytes
     id_inscripcion Int
@@ -214,7 +215,8 @@ model Inscripcion_practica{
     fecha_inscripcion_practica DateTime @db.Date 
     fecha_inicio DateTime @db.Date
     fecha_fin DateTime @db.Date
-    nota_final Int
+    nota_empresa Int
+    nota_encargado Int
     observaciones String @db.VarChar(1300)
     id_representante Int?
     representante Representante? @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
