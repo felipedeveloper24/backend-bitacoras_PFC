@@ -92,7 +92,8 @@ const mostrar_inscripcion = async(req,res) =>{
             include:{
                 estado_inscripcion:true,
                 representante:true,
-                modalidad:true
+                modalidad:true,
+                oferta_practica:true
             }
         })
         if(!inscripcion){

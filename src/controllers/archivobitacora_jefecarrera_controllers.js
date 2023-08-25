@@ -154,4 +154,26 @@ const eliminar_archivo = async(req, res) => {
     }
 }
 
-module.exports = {crear_archivo, obtener_archivos, eliminar_archivo, mostrar_archivos_pdf,mostrar_imagenes}
+const mostrar_archivo = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const archivo = await prisma.archivo_bitacora_jefe_carrera.findFirst({
+            where:{
+                id_archivo:Number(id)
+            }
+        })
+        if(!archivo){
+            return res.status(200).json({
+                mensaje:"No se ha encontrado el archivo"
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se ha encontrado el archivo",
+            archivo:archivo
+        })
+    }catch(error){
+        return res.status(400).json({message:'Error, no se ha podido eliminar',error:error.stack})
+    }
+}
+
+module.exports = {crear_archivo, obtener_archivos, eliminar_archivo, mostrar_archivos_pdf,mostrar_imagenes,mostrar_archivo}

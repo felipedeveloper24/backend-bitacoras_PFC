@@ -76,6 +76,31 @@ const mostrar_archivos = async(req,res) =>{
         })
     }
 }
+const mostrar_archivo = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const archivo = await prisma.archivo_inscripcion.findFirst({
+            where:{
+                id_archivo:Number(id)
+            }
+        })
+        if(!archivo){
+            return res.status(400).json({
+                mensaje:"No se ha encontrado el documento",
+                archivo:archivo
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se ha encontrado el documento",
+            archivo:archivo
+        })
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error mostrar archivo",
+            error:error.stack
+        })
+    }
+}
 const eliminar_archivo = async(req,res) =>{
     try{
         const errors = validationResult(req);
@@ -112,4 +137,4 @@ const eliminar_archivo = async(req,res) =>{
         })
     }
 }
-module.exports = {subirArchivo,mostrar_archivos,eliminar_archivo}
+module.exports = {subirArchivo,mostrar_archivos,eliminar_archivo,mostrar_archivo}

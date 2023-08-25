@@ -35,5 +35,7 @@ routerArchivoInscripcion.delete("/delete/:id",
 ]
 ,archivoInscripcionController.eliminar_archivo);
 
+routerArchivoInscripcion.get("/show/:id",[AutenticacionToken],archivoInscripcionController.mostrar_archivo);
+
 
 module.exports = routerArchivoInscripcion;

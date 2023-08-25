@@ -180,8 +180,8 @@ model Oferta_practica{
     modalidad Modalidad @relation(fields: [id_modalidad],references: [id_modalidad],onDelete: Cascade, onUpdate: Cascade)
     id_periodo_academico Int
     periodo_academico Periodo_academico @relation(fields: [id_periodo_academico],references: [id_periodo_academico],onDelete: Cascade,onUpdate: Cascade)
-    id_empresa Int
-    empresa Empresa @relation(fields: [id_empresa],references: [id_empresa],onDelete: Cascade,onUpdate: Cascade)
+    id_empresa Int?
+    empresa Empresa? @relation(fields: [id_empresa],references: [id_empresa],onDelete: SetNull ,onUpdate: Cascade)
     inscripcion_practica Inscripcion_practica[]
 }
 model Estado_inscripcion{
@@ -221,13 +221,13 @@ model Inscripcion_practica{
     id_representante Int?
     representante Representante? @relation(fields: [id_representante],references: [id_representante],onDelete: Cascade,onUpdate: Cascade)
     id_oferta Int?
-    oferta_practica Oferta_practica? @relation(fields: [id_oferta],references: [id_oferta_practica],onDelete: Cascade,onUpdate: Cascade)
+    oferta_practica Oferta_practica? @relation(fields: [id_oferta],references: [id_oferta_practica],onDelete: SetNull,onUpdate: Cascade)
 
     id_estado_inscripcion Int
     estado_inscripcion Estado_inscripcion @relation(fields: [id_estado_inscripcion],references: [id_estado_inscripcion],onDelete: Cascade,onUpdate: Cascade)
 
     id_modalidad Int
-    modalidad Modalidad @relation(fields: [id_modalidad],references: [id_modalidad],onDelete: Cascade,onUpdate: Cascade)
+    modalidad Modalidad @relation(fields: [id_modalidad],references: [id_modalidad],onDelete: NoAction,onUpdate: NoAction)
 
     id_inscribe Int
     inscribe Inscribe @relation(fields: [id_inscribe],references: [id_inscripcion],onDelete: Cascade,onUpdate: Cascade)

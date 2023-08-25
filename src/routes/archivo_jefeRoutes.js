@@ -32,6 +32,8 @@ routerArchivoJefe.delete("/delete/:id",
 ]
 ,archivoBitacoraJefeController.eliminar_archivo)
 
+routerArchivoJefe.get("/show/:id",[AutenticacionJefe],archivoBitacoraJefeController.mostrar_archivo)
+
 routerArchivoJefe.post("/getpdf",
 [
     AutenticacionJefe
