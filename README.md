@@ -19,7 +19,7 @@ To run this project, you will need to add the following environment variables to
 
 `PORT= 3000`
 
-JWT_SECRETO = HOLAMUNDO
+JWT_SECRETO = BITACORAS
 
 JWT_TIEMPO_EXPIRA = 60m
 
