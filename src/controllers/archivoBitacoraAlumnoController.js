@@ -77,6 +77,31 @@ const mostrar_archivos_pdf = async(req,res) =>{
         })
     }
 }
+const mostrar_archivo = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const archivo = await prisma.archivo_bitacora_alumno.findFirst({
+            where:{
+                id_archivo:Number(id)
+            }
+        })
+        if(!archivo){
+            return res.status(400).json({
+                mensaje:"No se ha encontrado el documento",
+                archivo:archivo
+            })
+        }
+        return res.status(200).json({
+            mensaje:"Se ha encontrado el documento",
+            archivo:archivo
+        })
+    }catch(error){
+        return res.status(400).json({
+            mensaje:"Error mostrar archivo",
+            error:error.stack
+        })
+    }
+}
 const mostrar_imagenes = async(req,res)=>{
     try{
         const errors = validationResult(req);
@@ -146,4 +171,4 @@ const eliminar_archivo = async(req,res) =>{
         })
     }
 }
-module.exports = {subirArchivo,mostrar_archivos_pdf,eliminar_archivo,mostrar_imagenes}
+module.exports = {subirArchivo,mostrar_archivos_pdf,eliminar_archivo,mostrar_imagenes,mostrar_archivo}

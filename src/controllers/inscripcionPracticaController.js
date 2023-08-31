@@ -124,8 +124,10 @@ const eliminar_inscripcion = async(req,res) =>{
             })
         }
         const {id} = req.params;
+        console.log(id)
         const inscripcion = await prisma.inscripcion_practica.findFirst({
             where:{
+                
                 id_inscripcion_practica:Number(id)
             }
         });
@@ -136,7 +138,7 @@ const eliminar_inscripcion = async(req,res) =>{
         }
         await prisma.inscripcion_practica.delete({
             where:{
-                id_inscripcion_practica:Number(id)
+                id_inscripcion_practica : Number( inscripcion.id_inscripcion_practica)
             }
         })
         return res.status(200).json({
@@ -241,7 +243,8 @@ const comprobar_inscripcion = async(req,res)=>{
         }
         return res.status(200).json({
             mensaje:"Tiene su práctica inscrita correctamente en el sistema",
-            inscrito_sistema:true
+            inscrito_sistema:true,
+            id_inscripcion:inscripcion_sistema.id_inscripcion_practica
         })
 
     }catch(error){

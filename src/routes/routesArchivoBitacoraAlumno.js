@@ -35,6 +35,8 @@ routerArchivoAlumno.post("/getimagenes",
 ,archivoBitacoraAlumnoController.mostrar_imagenes);
 
 
+routerArchivoAlumno.get("/show/:id",archivoBitacoraAlumnoController.mostrar_archivo);
+
 
 routerArchivoAlumno.delete("/delete/:id",
 [
